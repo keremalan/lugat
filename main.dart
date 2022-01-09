@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:lugat/categories/design_category.dart';
 import 'package:lugat/pages/album.dart';
 import 'package:lugat/pages/bookmark.dart';
 import 'package:lugat/pages/category.dart';
@@ -112,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
               goHome();
             }, child: Container(
-              width: 40.w,
+              width: 42.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
@@ -274,7 +275,12 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(top: 22, bottom: 2),
               child: DescriptionText("Kategoriler"),
             ),
-            CategoryTitle("Tasarım"),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()),
+                );
+              },
+                child: CategoryTitle("Tasarım")),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
