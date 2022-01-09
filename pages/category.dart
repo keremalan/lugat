@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../widgets/divider.dart';
@@ -194,6 +195,29 @@ class _AddTermPageState extends State<AddTermPage> {
   String termExample = '';
   String termDescription = '';
   String termAuthor = '';
+  String _myActivity = '';
+  String termCategory = '';
+  String _myActivityResult = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _myActivity = '';
+    _myActivityResult = '';
+  }
+
+  _saveForm() {
+    var formKey;
+    var form = formKey.currentState;
+    if(form.validate()) {
+      form.save();
+      setState(() {
+        _myActivityResult = _myActivity;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -251,6 +275,34 @@ class _AddTermPageState extends State<AddTermPage> {
                                   entry['titleName'] = newValue;
                                 },
                               ),
+                            ),
+                            DropDownFormField(
+                              titleText: 'Kategori',
+                              hintText: 'Kategori seçmek için buraya dokunun',
+                              value: _myActivity,
+                              onSaved: (value) {
+                                setState(() {
+                                  _myActivity = value;
+                                });
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  _myActivity = value;
+                                });
+                                termCategory = value;
+                              },
+                              dataSource: [
+                                {
+                                  "display": "Tasarım",
+                                  "value": "Design",
+                                },
+                                {
+                                  "display": "Yazılım",
+                                  "value": "Software",
+                                },
+                              ],
+                              textField: 'display',
+                              valueField: 'value',
                             ),
                           ],
                         ),
@@ -362,7 +414,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'titleMean': termMeans, 'titleExample': termExample, 'titleDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false,
+                                      'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false,
                                     });
 
 

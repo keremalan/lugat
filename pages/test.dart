@@ -44,7 +44,7 @@ class _TestPageState extends State<TestPage> {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
               return ListTile(
                 title: Text(data['termTitle']),
-                subtitle: Text(data['titleExample']),
+                subtitle: Text(data['termExample']),
               );
             }).toList(),
           );
