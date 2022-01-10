@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/categories/design_category.dart';
+import 'package:lugat/categories/software_category.dart';
 import 'package:lugat/pages/album.dart';
 import 'package:lugat/pages/bookmark.dart';
 import 'package:lugat/pages/category.dart';
@@ -304,7 +305,12 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            CategoryTitle("Yazılım"),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SoftwareCategory()),
+                );
+              },
+                child: CategoryTitle("Yazılım")),
             Padding(
               padding: const EdgeInsets.only(bottom: 18),
               child: SingleChildScrollView(

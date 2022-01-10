@@ -258,9 +258,7 @@ Widget CategoryTitle(categoryName) {
         HeadlineText("${categoryName}", "#000000"),
         SizedBox(
           height: 30,
-          child: TextButton(
-              onPressed: () {}, child: Caption1Text("Tümünü gör", "#001FC6")),
-        ),
+          child: Caption1Text("Tümünü gör", "#001FC6")),
       ],
     ),
   );
