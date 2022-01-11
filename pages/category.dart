@@ -320,6 +320,14 @@ class _AddTermPageState extends State<AddTermPage> {
                                   "display": "Back-end Developer",
                                   "value": "BackEnd",
                                 },
+                                {
+                                  "display": "UI",
+                                  "value": "UI",
+                                },
+                                {
+                                  "display": "UX",
+                                  "value": "UX",
+                                },
                               ],
                               textField: 'display',
                               valueField: 'value',
