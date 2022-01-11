@@ -92,7 +92,7 @@ class _UxCategoryState extends State<UxCategory> {
                   child: Column(
                     children: [
                       CategoryCard("UX", "1",
-                          "https://www.upload.ee/image/13779591/designCategory.png"),
+                          "https://www.upload.ee/image/13785725/uxCategory.png", "UX"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -268,38 +268,6 @@ class _AddTermPageState extends State<AddTermPage> {
                                 },
                               ),
                             ),
-                            DropDownFormField(
-                              titleText: 'Kategori',
-                              hintText: 'Kategori seçmek için buraya dokunun',
-                              value: _myActivity,
-                              onSaved: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                                termCategory = value;
-                              },
-                              dataSource: [
-                                {
-                                  "display": "Tasarım",
-                                  "value": "Design",
-                                },
-                                {
-                                  "display": "Yazılım",
-                                  "value": "Software",
-                                },
-                                {
-                                  "display": "Fotoğrafçılık",
-                                  "value": "Photography",
-                                },
-                              ],
-                              textField: 'display',
-                              valueField: 'value',
-                            ),
                           ],
                         ),
                       ),
@@ -356,10 +324,12 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termExample = value;
+                                termCategory = 'UX';
                               });
                             },
                             onSaved: (newValue) {
                               entry['titleExample'] = newValue;
+                              termCategory = 'UX';
                             },
                           ),
                           Padding(
@@ -385,12 +355,14 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termDescription = value;
+                                entry['termCategory'] = "UX";
                               });
                             },
                             onSaved: (newValue) {
                               entry['titleDescription'] = newValue;
                               entry['termAuthor'] = FirebaseAuth.instance.currentUser!.displayName!;
                               entry['isSaved'] = false;
+                              termCategory = 'UX';
                             },
                           ),
                           Center(
@@ -412,19 +384,21 @@ class _AddTermPageState extends State<AddTermPage> {
                                     FirebaseFirestore.instance.collection('terms').add({
                                       'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false,
                                     });
-
-
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const Home()),
+                                          const AddTermSuccessPage()),
                                     );
                                   }
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
-                                  child: BodyText("Tamamla", "#FFFFFF"),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ErrorPage()));
+                                    },
+                                      child: BodyText("Tamamla", "#FFFFFF")),
                                 ),
                               ),
                             ),
@@ -466,6 +440,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 34),
                 child: Column(
                   children: [
+                    Title2Text('$termTitle', '#FFFFFF'),
                     Padding(
                       padding: const EdgeInsets.only(top: 36, bottom: 4),
                       child: Title2Text('Teriminiz başarıyla oluşturuldu.', '#000000'),
@@ -492,7 +467,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                     const UxCategory()),
                               );
                             },
-                            child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
+                            child: BodyText("UX Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -522,7 +497,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Tasarım",
+          "UX",
           style: TextStyle(
             color: Colors.black,
           ),

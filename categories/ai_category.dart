@@ -92,7 +92,7 @@ class _AiCategoryState extends State<AiCategory> {
                   child: Column(
                     children: [
                       CategoryCard("Yapay Zeka", "1",
-                          "https://www.upload.ee/image/13779591/designCategory.png"),
+                          "https://www.upload.ee/image/13785634/aiCategory.png", "AI"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -296,6 +296,30 @@ class _AddTermPageState extends State<AddTermPage> {
                                   "display": "Fotoğrafçılık",
                                   "value": "Photography",
                                 },
+                                {
+                                  "display": "Yapay Zeka",
+                                  "value": "Ai",
+                                },
+                                {
+                                  "display": "Metaverse",
+                                  "value": "Metaverse",
+                                },
+                                {
+                                  "display": "Front-end Developer",
+                                  "value": "FrontEnd",
+                                },
+                                {
+                                  "display": "Back-end Developer",
+                                  "value": "BackEnd",
+                                },
+                                {
+                                  "display": "UI",
+                                  "value": "UI",
+                                },
+                                {
+                                  "display": "UX",
+                                  "value": "UX",
+                                },
                               ],
                               textField: 'display',
                               valueField: 'value',
@@ -492,7 +516,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                     const AiCategory()),
                               );
                             },
-                            child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
+                            child: BodyText("Yapay Zeka Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -522,7 +546,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Tasarım",
+          "Yapay Zeka",
           style: TextStyle(
             color: Colors.black,
           ),

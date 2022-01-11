@@ -90,7 +90,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Column(
                     children: [
                       CategoryCard("Fotoğrafçılık", "47",
-                          "https://www.upload.ee/image/13763005/diyafram.png"),
+                          "https://www.upload.ee/image/13763005/diyafram.png", "Diyafram"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(

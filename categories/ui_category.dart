@@ -92,7 +92,7 @@ class _UiCategoryState extends State<UiCategory> {
                   child: Column(
                     children: [
                       CategoryCard("UI", "1",
-                          "https://www.upload.ee/image/13779591/designCategory.png"),
+                          "https://www.upload.ee/image/13785723/uiCategory__2_.png", "UI"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -492,7 +492,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                     const UiCategory()),
                               );
                             },
-                            child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
+                            child: BodyText("UI Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -522,7 +522,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Tasarım",
+          "UI",
           style: TextStyle(
             color: Colors.black,
           ),

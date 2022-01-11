@@ -4,8 +4,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:lugat/categories/ai_category.dart';
+import 'package:lugat/categories/back_end_category.dart';
 import 'package:lugat/categories/design_category.dart';
+import 'package:lugat/categories/front_end_category.dart';
+import 'package:lugat/categories/metaverse_category.dart';
 import 'package:lugat/categories/software_category.dart';
+import 'package:lugat/categories/ui_category.dart';
+import 'package:lugat/categories/ux_category.dart';
 import 'package:lugat/pages/album.dart';
 import 'package:lugat/pages/bookmark.dart';
 import 'package:lugat/pages/category.dart';
@@ -236,29 +242,61 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13731286/ai.png",
-                    "Yapay Zeka",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AiCategory()));
+            },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13731286/ai.png",
+                      "Yapay Zeka",
+                    ),
                   ),
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13757839/metaverse.png",
-                    "Metaverse",
+                  GestureDetector(
+                    onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => MetaverseCategory()),
+                      );
+                    },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13757839/metaverse.png",
+                      "Metaverse",
+                    ),
                   ),
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13757844/front-end.png",
-                    "Front-end",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => FrontendCategory()));
+                    },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13757844/front-end.png",
+                      "Front-end",
+                    ),
                   ),
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13757847/back-end.png",
-                    "Back-end",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BackendCategory()));
+                    },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13757847/back-end.png",
+                      "Back-end",
+                    ),
                   ),
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13757855/UI__1_.png",
-                    "UI",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UiCategory()));
+                    },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13757855/UI__1_.png",
+                      "UI",
+                    ),
                   ),
-                  PopularCategoryCard(
-                    "https://www.upload.ee/image/13757856/UX.png",
-                    "UX",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UxCategory()));
+                    },
+                    child: PopularCategoryCard(
+                      "https://www.upload.ee/image/13757856/UX.png",
+                      "UX",
+                    ),
                   ),
                 ],
               ),
@@ -270,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               child: CategoryCard("Fotoğrafçılık", "1",
-                  "https://www.upload.ee/image/13763005/diyafram.png"),
+                  "https://www.upload.ee/image/13763005/diyafram.png", "Diyafram"),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 22, bottom: 2),

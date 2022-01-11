@@ -50,7 +50,7 @@ Widget PopularCategoryCard(categoryImgUrl, categoryName) {
   );
 }
 
-Widget CategoryCard(categoryName, categoryTermValue, categoryImageUrl) {
+Widget CategoryCard(categoryName, categoryTermValue, categoryImageUrl, dailyTerm) {
   return Padding(
     padding: const EdgeInsets.only(top: 8.0),
     child: Container(
@@ -75,7 +75,7 @@ Widget CategoryCard(categoryName, categoryTermValue, categoryImageUrl) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Caption2Text("Günün kelimesi", "#FFFFFF"),
-                    Caption2Text("Diyafram", "#FFFFFF"),
+                    Caption2Text("$dailyTerm", "#FFFFFF"),
                   ],
                 ),
               ],

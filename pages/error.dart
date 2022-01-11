@@ -113,7 +113,7 @@ class _ErrorPageState extends State<ErrorPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const HomePage()),
+                                      const Home()),
                                 );
                               },
                               child: Caption1Text("Ana sayfaya dön", "#FFFFFF"),

@@ -91,8 +91,8 @@ class _BackendCategoryState extends State<BackendCategory> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      CategoryCard("Front-end Developer", "1",
-                          "https://www.upload.ee/image/13779591/designCategory.png"),
+                      CategoryCard("Back-end Developer", "1",
+                          "https://www.upload.ee/image/13785710/backendCategory.png", "nginx"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -492,7 +492,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                     const BackendCategory()),
                               );
                             },
-                            child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
+                            child: BodyText("Back-end Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -522,7 +522,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Tasarım",
+          "Back-end",
           style: TextStyle(
             color: Colors.black,
           ),
