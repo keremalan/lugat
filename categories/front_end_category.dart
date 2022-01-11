@@ -48,12 +48,12 @@ class Term extends StatefulWidget {
     required this.termDescription,
     required this.termImageUrl,
   }) : super(key: key);
-    final String termCategory;
-    final String termTitle;
-    final String termMean;
-    final String termExample;
-    final String termDescription;
-    final String termImageUrl;
+  final String termCategory;
+  final String termTitle;
+  final String termMean;
+  final String termExample;
+  final String termDescription;
+  final String termImageUrl;
   @override
   _TermState createState() => _TermState();
 }
@@ -65,14 +65,16 @@ class _TermState extends State<Term> {
   }
 }
 
-class CategoryPage extends StatefulWidget {
-  const CategoryPage({Key? key}) : super(key: key);
+class FrontendCategory extends StatefulWidget {
+  const FrontendCategory({Key? key}) : super(key: key);
 
   @override
-  _CategoryPageState createState() => _CategoryPageState();
+  _FrontendCategoryState createState() => _FrontendCategoryState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _FrontendCategoryState extends State<FrontendCategory> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where('termCategory', isEqualTo: 'FrontEnd').snapshots();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -89,8 +91,8 @@ class _CategoryPageState extends State<CategoryPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      CategoryCard("Fotoğrafçılık", "47",
-                          "https://www.upload.ee/image/13763005/diyafram.png"),
+                      CategoryCard("Front-end Developer", "1",
+                          "https://www.upload.ee/image/13779591/designCategory.png"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -118,8 +120,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                 ),
                                 PopupMenuDivider(height: 4),
                                 PopupMenuItem<int>(
-                                  height: 36,
-                                  value: 1,
+                                    height: 36,
+                                    value: 1,
                                     child: Text("En yeni",
                                         style: TextStyle(
                                             color: HexColor('#FFFFFF')))),
@@ -128,49 +130,39 @@ class _CategoryPageState extends State<CategoryPage> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const TermPage()),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: _termsStream,
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                              if (snapshot.hasError) {
+                                return Text('Bir şeyler ters gitmiş olmalı.');
+                              }
+
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Text('Şu anda içerik yükleniyor.');
+                              }
+
+                              return ListView(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                  Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                  return ListTile(
+                                    title: Text(data['termTitle']),
+                                    subtitle: Text(data['termExample']),
+                                  );
+                                }).toList(),
                               );
                             },
-                            child: TermOverviewCard(
-                                termImageUrl:
-                                "https://www.upload.ee/image/13763015/diyafram__1_.png",
-                                termName: 'Diyafram',
-                                termDescription:
-                                'Lensin aldığı ışık miktarı'),
                           ),
-                          TermOverviewCard(
-                              termImageUrl:
-                              "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                              termName: 'Prototip',
-                              termDescription:
-                              'Ürün geliştirme sürecinde, ürünün kı...'),
-                          TermOverviewCard(
-                              termImageUrl:
-                              "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                              termName: 'Prototip',
-                              termDescription:
-                              'Ürün geliştirme sürecinde, ürünün kı...'),
-                          TermOverviewCard(
-                              termImageUrl:
-                              "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                              termName: 'Prototip',
-                              termDescription:
-                              'Ürün geliştirme sürecinde, ürünün kı...'),
-                        ].joinWidgetList(
-                              (index) => Divider(),
-                      ),
+                        ),
                       ),
                     ],
-                    ),
                   ),
                 ),
+              ),
             ],
           ),
         ),
@@ -304,22 +296,6 @@ class _AddTermPageState extends State<AddTermPage> {
                                   "display": "Fotoğrafçılık",
                                   "value": "Photography",
                                 },
-                                {
-                                  "display": "Yapay Zeka",
-                                  "value": "Ai",
-                                },
-                                {
-                                  "display": "Metaverse",
-                                  "value": "Metaverse",
-                                },
-                                {
-                                  "display": "Front-end Developer",
-                                  "value": "FrontEnd",
-                                },
-                                {
-                                  "display": "Back-end Developer",
-                                  "value": "BackEnd",
-                                },
                               ],
                               textField: 'display',
                               valueField: 'value',
@@ -350,10 +326,10 @@ class _AddTermPageState extends State<AddTermPage> {
                               hintText: "Bilgi eklemek için buraya dokun",
                             ),
                             onChanged: (value) {
-                            setState(() {
-                              termMeans = value;
-                            });
-                          },
+                              setState(() {
+                                termMeans = value;
+                              });
+                            },
                             onSaved: (newValue) {
                               entry['titleMean'] = newValue;
                             },
@@ -513,7 +489,7 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const CategoryPage()),
+                                    const FrontendCategory()),
                               );
                             },
                             child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
@@ -546,7 +522,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Fotoğrafçılık",
+          "Tasarım",
           style: TextStyle(
             color: Colors.black,
           ),
