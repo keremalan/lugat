@@ -91,15 +91,10 @@ class _MetaverseCategoryState extends State<MetaverseCategory> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MetaverseCategory()));
-                        },
-                        child: CategoryCard("Metaverse", "1",
-                            "https://www.upload.ee/image/13785661/metaverseCategory.png", "Metaverse"),
-                      ),
+                      CategoryCard("Metaverse", "1",
+                          "https://www.upload.ee/image/13785661/metaverseCategory.png", "Metaverse"),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.only(top: 12, bottom: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

@@ -65,16 +65,16 @@ class _TermState extends State<Term> {
   }
 }
 
-class UxCategory extends StatefulWidget {
-  const UxCategory({Key? key}) : super(key: key);
+class GameDevCategory extends StatefulWidget {
+  const GameDevCategory({Key? key}) : super(key: key);
 
   @override
-  _UxCategoryState createState() => _UxCategoryState();
+  _GameDevCategoryState createState() => _GameDevCategoryState();
 }
 
-class _UxCategoryState extends State<UxCategory> {
+class _GameDevCategoryState extends State<GameDevCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('termCategory', isEqualTo: 'UX').snapshots();
+      .collection('terms').where('termCategory', isEqualTo: 'GameDev').snapshots();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -91,13 +91,8 @@ class _UxCategoryState extends State<UxCategory> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UxCategory()));
-                        },
-                        child: CategoryCard("UX", "1",
-                            "https://www.upload.ee/image/13785725/uxCategory.png", "UX"),
-                      ),
+                      CategoryCard("Oyun Geliştirme", "1",
+                          "https://www.upload.ee/image/13787464/gameCreatorCategory.png", "2D Asset"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(
@@ -289,6 +284,10 @@ class _AddTermPageState extends State<AddTermPage> {
                                 termCategory = value;
                               },
                               dataSource: [
+                                {
+                                  "display": "Oyun Geliştirme",
+                                  "value": "GameDev",
+                                },
                                 {
                                   "display": "Tasarım",
                                   "value": "Design",
@@ -518,10 +517,10 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    (UxCategory())),
+                                    const GameDevCategory()),
                               );
                             },
-                            child: BodyText("UX Kategorisi", "#FFFFFF"),
+                            child: BodyText("Tasarım Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -551,7 +550,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "UX",
+          "Oyun Geliştirme",
           style: TextStyle(
             color: Colors.black,
           ),

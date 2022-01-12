@@ -27,6 +27,7 @@ import 'package:lugat/pages/homeside.dart';
 import 'package:lugat/pages/profile.dart';
 import 'package:lugat/pages/test.dart';
 import 'package:lugat/utilities/google_sign_in.dart';
+import 'categories/game_dev_category.dart';
 import 'widgets/texts.dart';
 import 'widgets/cards.dart';
 import './pages/register.dart';
@@ -264,6 +265,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => GameDevCategory()),
+                      );
+                    },
+                    child: PopularCategoryCard('https://www.upload.ee/image/13787464/gameCreatorCategory.png', 'GameJam'),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => FrontendCategory()));
                     },
                     child: PopularCategoryCard(
@@ -304,11 +313,11 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => const CategoryPage()),
+                    builder: (context) => const MetaverseCategory()),
                 );
               },
-              child: CategoryCard("Fotoğrafçılık", "1",
-                  "https://www.upload.ee/image/13763005/diyafram.png", "Diyafram"),
+              child: CategoryCard("Metaverse", "1",
+                  "https://www.upload.ee/image/13785661/metaverseCategory.png", "Yalın Metaverse"),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 22, bottom: 2),

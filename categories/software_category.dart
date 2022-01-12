@@ -92,7 +92,7 @@ class _SoftwareCategoryState extends State<SoftwareCategory> {
                   child: Column(
                     children: [
                       CategoryCard("Yazılım", "1",
-                          "https://www.upload.ee/image/13779591/designCategory.png", "UI"),
+                          "https://www.upload.ee/image/13787440/softwareCategory.png", "Circuits"),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
                         child: Row(

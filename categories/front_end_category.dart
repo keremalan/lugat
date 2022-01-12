@@ -301,6 +301,10 @@ class _AddTermPageState extends State<AddTermPage> {
                                   "value": "Ai",
                                 },
                                 {
+                                  "display": "Oyun Geliştirme",
+                                  "value": "GameDev",
+                                },
+                                {
                                   "display": "Metaverse",
                                   "value": "Metaverse",
                                 },
