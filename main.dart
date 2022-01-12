@@ -183,7 +183,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LugatAppBar(),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -234,6 +233,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            LugatAppBar(),
             SearchBar('Aramak istediğiniz terimi girin'),
             Padding(
               padding: const EdgeInsets.only(top: 32, bottom: 2),

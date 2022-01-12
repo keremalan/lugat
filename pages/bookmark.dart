@@ -35,6 +35,10 @@ class _BookmarkPageState extends State<BookmarkPage> {
             child: Column(
               children: [
                 Padding(
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: LugatAppBar(),
+                ),
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Container(
                     child: Column(

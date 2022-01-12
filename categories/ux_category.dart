@@ -78,97 +78,103 @@ class _UxCategoryState extends State<UxCategory> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        decoration: BoxDecoration(
-          color: HexColor('#FFFFFF'),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              LugatAppBarCategory(),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UxCategory()));
-                        },
-                        child: CategoryCard("UX", "1",
-                            "https://www.upload.ee/image/13785725/uxCategory.png", "UX"),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            HeadlineText('Terimler', '#000000'),
-                            PopupMenuButton<int>(
-                              offset: Offset(-10, 36),
-                              elevation: 0,
-                              color: HexColor('#000000').withOpacity(0.8),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                              ),
-                              itemBuilder: (context) => [
-                                PopupMenuItem<int>(
-                                  height: 36,
-                                  value: 0,
-                                  child: Row(
-                                    children: [
-                                      Text("En popüler",
-                                          style: TextStyle(
-                                              color: HexColor('#FFFFFF'))),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuDivider(height: 4),
-                                PopupMenuItem<int>(
-                                    height: 36,
-                                    value: 1,
-                                    child: Text("En yeni",
-                                        style: TextStyle(
-                                            color: HexColor('#FFFFFF')))),
-                              ],
-                            ),
-                          ],
+      child: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            color: HexColor('#FFFFFF'),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                LugatAppBarCategory(),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => UxCategory()));
+                          },
+                          child: CategoryCard("UX", "1",
+                              "https://www.upload.ee/image/13785725/uxCategory.png", "UX"),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          child: StreamBuilder<QuerySnapshot>(
-                            stream: _termsStream,
-                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                              if (snapshot.hasError) {
-                                return Text('Bir şeyler ters gitmiş olmalı.');
-                              }
-
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Text('Şu anda içerik yükleniyor.');
-                              }
-
-                              return ListView(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                                  Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                                  return ListTile(
-                                    title: Text(data['termTitle']),
-                                    subtitle: Text(data['termExample']),
-                                  );
-                                }).toList(),
-                              );
-                            },
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              HeadlineText('Terimler', '#000000'),
+                              PopupMenuButton<int>(
+                                offset: Offset(-10, 36),
+                                elevation: 0,
+                                color: HexColor('#000000').withOpacity(0.8),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                ),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem<int>(
+                                    height: 36,
+                                    value: 0,
+                                    child: Row(
+                                      children: [
+                                        Text("En popüler",
+                                            style: TextStyle(
+                                                color: HexColor('#FFFFFF'))),
+                                      ],
+                                    ),
+                                  ),
+                                  PopupMenuDivider(height: 4),
+                                  PopupMenuItem<int>(
+                                      height: 36,
+                                      value: 1,
+                                      child: Text("En yeni",
+                                          style: TextStyle(
+                                              color: HexColor('#FFFFFF')))),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: _termsStream,
+                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                if (snapshot.hasError) {
+                                  return Text('Bir şeyler ters gitmiş olmalı.');
+                                }
+
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Text('Şu anda içerik yükleniyor.');
+                                }
+
+                                return MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                      return ListTile(
+                                        title: Text(data['termTitle']),
+                                        subtitle: Text(data['termExample']),
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -194,6 +200,7 @@ class _AddTermPageState extends State<AddTermPage> {
   String termAuthor = '';
   String _myActivity = '';
   String termCategory = '';
+  String uid = '';
   String _myActivityResult = '';
 
   @override
@@ -414,11 +421,13 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termDescription = value;
+                                uid = '${FirebaseAuth.instance.currentUser!.uid}';
                               });
                             },
                             onSaved: (newValue) {
                               entry['titleDescription'] = newValue;
                               entry['termAuthor'] = FirebaseAuth.instance.currentUser!.displayName!;
+                              uid = '${FirebaseAuth.instance.currentUser!.uid}';
                               entry['isSaved'] = false;
                             },
                           ),
@@ -439,7 +448,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false,
+                                      'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
                                     });
 
 

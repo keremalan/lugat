@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -8,6 +9,7 @@ import 'package:lugat/pages/category.dart';
 import 'package:lugat/pages/error.dart';
 import 'package:lugat/pages/homeside.dart';
 import 'package:lugat/pages/term.dart';
+import 'package:lugat/utilities/google_sign_in.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
@@ -22,6 +24,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').snapshots();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -32,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              LugatAppBarProfile(),
               Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -117,16 +122,41 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       ProfileOverviewSubText(),
-                      Column(
-                        children: [
-                          TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13739165/prototypeTerm.png', termName: 'Prototip', termDescription: 'Ürün geliştirme sürecinde, ürün..',),
-                          Divider(),
-                          TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13739165/prototypeTerm.png', termName: 'Prototip', termDescription: 'Ürün geliştirme sürecinde, ürün..',),
-                          Divider(),
-                          TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13739165/prototypeTerm.png', termName: 'Prototip', termDescription: 'Ürün geliştirme sürecinde, ürün..',),
-                          Divider(),
-                          TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13739165/prototypeTerm.png', termName: 'Prototip', termDescription: 'Ürün geliştirme sürecinde, ürün..',),
-                        ]
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: _termsStream,
+                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                if (snapshot.hasError) {
+                                  return Text('Bir şeyler ters gitmiş olmalı.');
+                                }
+
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Text('Şu anda içerik yükleniyor.');
+                                }
+
+                                return MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                      return ListTile(
+                                        title: Text(data['termTitle']),
+                                        subtitle: Text(data['termExample']),
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -504,7 +534,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                       padding: const EdgeInsets.only(top: 84),
                       child: Column(
                         children: [
-                          HomeSideItem(itemTitle: 'Çıkış yap', itemDesc: ''),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32),
+                            child: TextButton(
+                              onPressed: () async {
+                                await signOutWithGoogle();
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SplashScreen()),
+                                );
+                              },
+                              child: Text("Çıkış yap"),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -560,7 +600,7 @@ class _ProfileSettingsPersonalState extends State<ProfileSettingsPersonal> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: ProfileSettingsPersonalItem(itemText: 'İsim', itemDescription: 'Kerem Alan',),
+                              child: ProfileSettingsPersonalItem(itemText: 'İsim', itemDescription: '${FirebaseAuth.instance.currentUser!.displayName!}',),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -655,7 +695,7 @@ class _ProfileSettingsSecurityState extends State<ProfileSettingsSecurity> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: ProfileSettingsPersonalItem(itemText: 'E-Posta adresi', itemDescription: '$userEmail',),
+                              child: ProfileSettingsPersonalItem(itemText: 'E-Posta adresi', itemDescription: '${FirebaseAuth.instance.currentUser!.email!}',),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -958,32 +998,36 @@ class LugatAppBarProfile extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      title: const Padding(
-        padding: EdgeInsets.only(left: 12),
-        child: Text(
-          "Profil",
-          style: TextStyle(
-            color: Colors.black,
+    return Padding(
+      padding: const EdgeInsets.only(top: 14.0),
+      child: AppBar(
+        centerTitle: false,
+        elevation: 0,
+        title: const Padding(
+          padding: EdgeInsets.only(left: 12),
+          child: Text(
+            "Profil",
+            style: TextStyle(
+              color: Colors.black,
+            ),
           ),
         ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileSettings()),
+                );
+              },
+              child: const Icon(Icons.settings),
+            ),
+          ),
+        ],
       ),
-      actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProfileSettings()),
-              );
-            },
-            child: const Icon(Icons.settings),
-          ),
-        ),
-      ],
     );
   }
 }
