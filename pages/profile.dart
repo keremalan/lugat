@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -26,6 +27,12 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
       .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').snapshots();
+  final Stream<QuerySnapshot> _designTermsStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').where('termCategory', isEqualTo: 'Design').snapshots();
+  final Stream<QuerySnapshot> _softwareTermsStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').where('termCategory', isEqualTo: 'Software').snapshots();
+  final Stream<QuerySnapshot> _metaverseTermsStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').where('termCategory', isEqualTo: 'Metaverse').snapshots();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -70,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            TextButton(child: ProfileOverviewCard(overviewCategoryColor: '#007AFF', overviewCategoryName: 'Tasarım', overviewCategoryValue: '29',),
+                            TextButton(child: ProfileOverviewCard(overviewCategoryColor: '#007AFF', overviewCategoryName: 'Tasarım', overviewCategoryValue: '',),
                               onPressed: () {
                               showModalBottomSheet(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ,context: context, builder: (BuildContext context){
                                 return SingleChildScrollView(
@@ -88,24 +95,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                         padding: const EdgeInsets.only(left: 26, top: 16),
                                         child: Column(
                                           children: [
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Divider(),
-                                            TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13740439/prototypeTerm__5_.png', termName: 'Prototip', termDescription: 'Ürün geliştirme süreçlerinde kısa süred...'),
-                                            Padding(
-                                              padding: const EdgeInsets.only(bottom: 30),
-                                              child: Divider(),
+                                            Container(
+                                              child: StreamBuilder<QuerySnapshot>(
+                                                stream: _designTermsStream,
+                                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                                  if (snapshot.hasError) {
+                                                    return Text('Bir şeyler ters gitmiş olmalı.');
+                                                  }
+
+                                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                                    return Text('Şu anda içerik yükleniyor.');
+                                                  }
+
+                                                  return MediaQuery.removePadding(
+                                                    removeTop: true,
+                                                    context: context,
+                                                    child: ListView(
+                                                      scrollDirection: Axis.vertical,
+                                                      shrinkWrap: true,
+                                                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                                        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                                        return ListTile(
+                                                          title: Text(data['termTitle']),
+                                                          subtitle: Text(data['termExample']),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -116,8 +134,120 @@ class _ProfilePageState extends State<ProfilePage> {
                               });
                               },
                             ),
-                            ProfileOverviewCard(overviewCategoryColor: '#34C85A', overviewCategoryName: 'Yazılım', overviewCategoryValue: '17',),
-                            ProfileOverviewCard(overviewCategoryColor: '#FFCC00', overviewCategoryName: 'Metaverse', overviewCategoryValue: '4',),
+                            TextButton(child: ProfileOverviewCard(overviewCategoryColor: '#34C85A', overviewCategoryName: 'Yazılım', overviewCategoryValue: '',),
+                              onPressed: () {
+                                showModalBottomSheet(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ,context: context, builder: (BuildContext context){
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 36, top: 22),
+                                          child: Row(
+                                            children: [
+                                              BodyText("Yazılım kategorisine katkılarım", '#000000'),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 26, top: 16),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                child: StreamBuilder<QuerySnapshot>(
+                                                  stream: _softwareTermsStream,
+                                                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                                    if (snapshot.hasError) {
+                                                      return Text('Bir şeyler ters gitmiş olmalı.');
+                                                    }
+
+                                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                                      return Text('Şu anda içerik yükleniyor.');
+                                                    }
+
+                                                    return MediaQuery.removePadding(
+                                                      removeTop: true,
+                                                      context: context,
+                                                      child: ListView(
+                                                        scrollDirection: Axis.vertical,
+                                                        shrinkWrap: true,
+                                                        children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                                          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                                          return ListTile(
+                                                            title: Text(data['termTitle']),
+                                                            subtitle: Text(data['termExample']),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                              },
+                            ),
+                            TextButton(child: ProfileOverviewCard(overviewCategoryColor: '#FFCC00', overviewCategoryName: 'Metaverse', overviewCategoryValue: '',),
+                              onPressed: () {
+                                showModalBottomSheet(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ,context: context, builder: (BuildContext context){
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 36, top: 22),
+                                          child: Row(
+                                            children: [
+                                              BodyText("Metaverse kategorisine katkılarım", '#000000'),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 26, top: 16),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                child: StreamBuilder<QuerySnapshot>(
+                                                  stream: _metaverseTermsStream,
+                                                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                                    if (snapshot.hasError) {
+                                                      return Text('Bir şeyler ters gitmiş olmalı.');
+                                                    }
+
+                                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                                      return Text('Şu anda içerik yükleniyor.');
+                                                    }
+
+                                                    return MediaQuery.removePadding(
+                                                      removeTop: true,
+                                                      context: context,
+                                                      child: ListView(
+                                                        scrollDirection: Axis.vertical,
+                                                        shrinkWrap: true,
+                                                        children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                                          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                                          return ListTile(
+                                                            title: Text(data['termTitle']),
+                                                            subtitle: Text(data['termExample']),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                              },
+                            ),
                           ],
                         ),
                       ),

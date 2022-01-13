@@ -872,7 +872,7 @@ class _ReportSuccessPageState extends State<ReportSuccessPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                              const HomePage()),
+                              const Home()),
                         );
                       },
                       child: Caption1Text("Ana sayfa", "#FFFFFF"),

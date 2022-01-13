@@ -6,6 +6,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/main.dart';
 import 'package:lugat/pages/profile.dart';
+import 'package:lugat/pages/term.dart';
 import '../widgets/cards.dart';
 import 'package:lugat/pages/error.dart';
 import 'package:lugat/pages/homeside.dart';
@@ -62,7 +63,13 @@ class _BookmarkPageState extends State<BookmarkPage> {
                 ),
                 Column(
                   children: [
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs..."),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => TermPage(),
+                        ));
+                      },
+                        child: TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs...")),
                     Divider(),
                     TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs..."),
                     Divider(),
