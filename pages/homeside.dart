@@ -93,17 +93,6 @@ class _HomeSideState extends State<HomeSide> {
                     itemDesc: 'Lügatın geleceğini inceleyin ve söz sahibi olun.',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32),
-                child: TextButton(
-                  onPressed: () async {
-                    await signOutWithGoogle();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SplashScreen()),
-                    );
-                  },
-                  child: Text("Çıkış yap"),
-                ),
-              ),
             ],
           ),
         ),
