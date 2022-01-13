@@ -77,98 +77,109 @@ class _BackendCategoryState extends State<BackendCategory> {
       .collection('terms').where('termCategory', isEqualTo: 'BackEnd').snapshots();
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            color: HexColor('#FFFFFF'),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                LugatAppBarCategory(),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        CategoryCard("Back-end Developer", "1",
-                            "https://www.upload.ee/image/13785710/backendCategory.png", "nginx"),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              HeadlineText('Terimler', '#000000'),
-                              PopupMenuButton<int>(
-                                offset: Offset(-10, 36),
-                                elevation: 0,
-                                color: HexColor('#000000').withOpacity(0.8),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                                ),
-                                itemBuilder: (context) => [
-                                  PopupMenuItem<int>(
-                                    height: 36,
-                                    value: 0,
-                                    child: Row(
-                                      children: [
-                                        Text("En popüler",
-                                            style: TextStyle(
-                                                color: HexColor('#FFFFFF'))),
-                                      ],
-                                    ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => AddTermPage(),
+          ));
+        },
+        backgroundColor: HexColor('#000000'),
+        child: Icon(Icons.add),
+      ),
+      body: Material(
+        child: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+              color: HexColor('#FFFFFF'),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LugatAppBarCategory(),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          CategoryCard("Back-end Developer", "1",
+                              "https://www.upload.ee/image/13785710/backendCategory.png", "nginx"),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                HeadlineText('Terimler', '#000000'),
+                                PopupMenuButton<int>(
+                                  offset: Offset(-10, 36),
+                                  elevation: 0,
+                                  color: HexColor('#000000').withOpacity(0.8),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(6)),
                                   ),
-                                  PopupMenuDivider(height: 4),
-                                  PopupMenuItem<int>(
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem<int>(
                                       height: 36,
-                                      value: 1,
-                                      child: Text("En yeni",
-                                          style: TextStyle(
-                                              color: HexColor('#FFFFFF')))),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: StreamBuilder<QuerySnapshot>(
-                              stream: _termsStream,
-                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                if (snapshot.hasError) {
-                                  return Text('Bir şeyler ters gitmiş olmalı.');
-                                }
-
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Text('Şu anda içerik yükleniyor.');
-                                }
-
-                                return MediaQuery.removePadding(
-                                  removeTop: true,
-                                  context: context,
-                                  child: ListView(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                                      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                                      return ListTile(
-                                        title: Text(data['termTitle']),
-                                        subtitle: Text(data['termExample']),
-                                      );
-                                    }).toList(),
-                                  ),
-                                );
-                              },
+                                      value: 0,
+                                      child: Row(
+                                        children: [
+                                          Text("En popüler",
+                                              style: TextStyle(
+                                                  color: HexColor('#FFFFFF'))),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuDivider(height: 4),
+                                    PopupMenuItem<int>(
+                                        height: 36,
+                                        value: 1,
+                                        child: Text("En yeni",
+                                            style: TextStyle(
+                                                color: HexColor('#FFFFFF')))),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              child: StreamBuilder<QuerySnapshot>(
+                                stream: _termsStream,
+                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                  if (snapshot.hasError) {
+                                    return Text('Bir şeyler ters gitmiş olmalı.');
+                                  }
+
+                                  if (snapshot.connectionState == ConnectionState.waiting) {
+                                    return Text('Şu anda içerik yükleniyor.');
+                                  }
+
+                                  return MediaQuery.removePadding(
+                                    removeTop: true,
+                                    context: context,
+                                    child: ListView(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                                        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                                        return ListTile(
+                                          title: Text(data['termTitle']),
+                                          subtitle: Text(data['termExample']),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -275,38 +286,6 @@ class _AddTermPageState extends State<AddTermPage> {
                                 },
                               ),
                             ),
-                            DropDownFormField(
-                              titleText: 'Kategori',
-                              hintText: 'Kategori seçmek için buraya dokunun',
-                              value: _myActivity,
-                              onSaved: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                                termCategory = value;
-                              },
-                              dataSource: [
-                                {
-                                  "display": "Tasarım",
-                                  "value": "Design",
-                                },
-                                {
-                                  "display": "Yazılım",
-                                  "value": "Software",
-                                },
-                                {
-                                  "display": "Fotoğrafçılık",
-                                  "value": "Photography",
-                                },
-                              ],
-                              textField: 'display',
-                              valueField: 'value',
-                            ),
                           ],
                         ),
                       ),
@@ -335,6 +314,7 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termMeans = value;
+                                termCategory = 'BackEnd';
                               });
                             },
                             onSaved: (newValue) {
@@ -536,18 +516,6 @@ class LugatAppBarCategory extends StatelessWidget
           ),
         ),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => AddTermPage()),
-                );
-              },
-              child: Icon(Icons.add)),
-        ),
-      ],
     );
   }
 }

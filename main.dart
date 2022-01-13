@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/categories/ai_category.dart';
@@ -614,8 +615,12 @@ class MyAppThemes {
   static ThemeData appThemeLight() {
     return ThemeData(
       scaffoldBackgroundColor: HexColor('#FFFFFF'),
+      backgroundColor: HexColor('#FFFFFF'),
       brightness: Brightness.light,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: HexColor('#FFFFF'),
+        ),
         color: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black,
