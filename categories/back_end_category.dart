@@ -161,11 +161,39 @@ class _BackendCategoryState extends State<BackendCategory> {
                                     child: ListView(
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
-                                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                                        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                                        return ListTile(
-                                          title: Text(data['termTitle']),
-                                          subtitle: Text(data['termExample']),
+                                      children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                                        final String termTitle = data.get('termTitle');
+                                        final String termImage = data['termImage'];
+                                        final String termMean = data['termMean'];
+                                        final String termExample = data['termExample'];
+                                        final String termDescription = data['termDescription'];
+                                        final String termAuthor = data['termAuthor'];
+                                        final String termCategory = data['termCategory'];
+                                        final bool isSaved = data['isSaved'];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(
+                                                builder: (context) => TermPage(data: data,)));
+                                          },
+                                          child: ListTile(
+                                            contentPadding:EdgeInsets.all(0),
+                                            leading: ClipRRect(
+                                              borderRadius: BorderRadius.circular(3),
+                                              child: Image.network(data['termImage'],
+                                                width: 40,
+                                                height: 40,
+                                              ),
+                                            ),
+                                            title: Text(data['termTitle'],
+                                              style: TextStyle(
+                                                  fontSize: 16
+                                              ),
+                                            ),
+                                            subtitle: Text(data['termExample'],
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                              ),),
+                                          ),
                                         );
                                       }).toList(),
                                     ),

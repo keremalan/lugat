@@ -75,9 +75,12 @@ class AiCategory extends StatefulWidget {
 class _AiCategoryState extends State<AiCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
       .collection('terms').where('termCategory', isEqualTo: 'Ai').snapshots();
+  final Stream<QuerySnapshot> _termStream = FirebaseFirestore.instance
+      .collection('terms').where('termCategory', isEqualTo: 'Ai').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
@@ -88,98 +91,124 @@ class _AiCategoryState extends State<AiCategory> {
         child: Icon(Icons.add),
       ),
       body: Material(
-        child: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              color: HexColor('#FFFFFF'),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  LugatAppBarCategory(),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          CategoryCard("Yapay Zeka", "1",
-                              "https://www.upload.ee/image/13785634/aiCategory.png", "AI"),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HeadlineText('Terimler', '#000000'),
-                                PopupMenuButton<int>(
-                                  offset: Offset(-10, 36),
-                                  elevation: 0,
-                                  color: HexColor('#000000').withOpacity(0.8),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                                  ),
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem<int>(
-                                      height: 36,
-                                      value: 0,
-                                      child: Row(
-                                        children: [
-                                          Text("En popüler",
-                                              style: TextStyle(
-                                                  color: HexColor('#FFFFFF'))),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuDivider(height: 4),
-                                    PopupMenuItem<int>(
-                                        height: 36,
-                                        value: 1,
-                                        child: Text("En yeni",
-                                            style: TextStyle(
-                                                color: HexColor('#FFFFFF')))),
-                                  ],
+        child: Container(
+          decoration: BoxDecoration(
+            color: HexColor('#FFFFFF'),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                LugatAppBarCategory(),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        CategoryCard("Yapay Zeka", "1",
+                            "https://www.upload.ee/image/13785634/aiCategory.png", "AI"),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              HeadlineText('Terimler', '#000000'),
+                              PopupMenuButton<int>(
+                                offset: Offset(-10, 36),
+                                elevation: 0,
+                                color: HexColor('#000000').withOpacity(0.8),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              child: StreamBuilder<QuerySnapshot>(
-                                stream: _termsStream,
-                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                  if (snapshot.hasError) {
-                                    return Text('Bir şeyler ters gitmiş olmalı.');
-                                  }
-
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return Text('Şu anda içerik yükleniyor.');
-                                  }
-
-                                  return MediaQuery.removePadding(
-                                    removeTop: true,
-                                    context: context,
-                                    child: ListView(
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                                        Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                                        return ListTile(
-                                          title: Text(data['termTitle']),
-                                          subtitle: Text(data['termExample']),
-                                        );
-                                      }).toList(),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem<int>(
+                                    height: 36,
+                                    value: 0,
+                                    child: Row(
+                                      children: [
+                                        Text("En popüler",
+                                            style: TextStyle(
+                                                color: HexColor('#FFFFFF'))),
+                                      ],
                                     ),
-                                  );
-                                },
+                                  ),
+                                  PopupMenuDivider(height: 4),
+                                  PopupMenuItem<int>(
+                                      height: 36,
+                                      value: 1,
+                                      child: Text("En yeni",
+                                          style: TextStyle(
+                                              color: HexColor('#FFFFFF')))),
+                                ],
                               ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: _termsStream,
+                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                if (snapshot.hasError) {
+                                  return Text('Bir şeyler ters gitmiş olmalı.');
+                                }
+
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Text('Şu anda içerik yükleniyor.');
+                                }
+
+                                return MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                                      final String termTitle = data.get('termTitle');
+                                      final String termImage = data['termImage'];
+                                      final String termMean = data['termMean'];
+                                      final String termExample = data['termExample'];
+                                      final String termDescription = data['termDescription'];
+                                      final String termAuthor = data['termAuthor'];
+                                      final String termCategory = data['termCategory'];
+                                      final bool isSaved = data['isSaved'];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => TermPage(data: data,)));
+                                        },
+                                        child: ListTile(
+                                          contentPadding:EdgeInsets.all(0),
+                                          leading: ClipRRect(
+                                            borderRadius: BorderRadius.circular(3),
+                                            child: Image.network(data['termImage'],
+                                              width: 40,
+                                              height: 40,
+                                            ),
+                                          ),
+                                          title: Text(data['termTitle'],
+                                            style: TextStyle(
+                                                fontSize: 16
+                                            ),
+                                          ),
+                                          subtitle: Text(data['termExample'],
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

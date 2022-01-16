@@ -17,15 +17,14 @@ import '../widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
 class TermPage extends StatefulWidget {
-  const TermPage({Key? key}) : super(key: key);
+  const TermPage({this.data});
+  final QueryDocumentSnapshot<Object?>? data;
 
   @override
   _TermPageState createState() => _TermPageState();
 }
 
 class _TermPageState extends State<TermPage> {
-  final Stream<QuerySnapshot> _termStream = FirebaseFirestore.instance
-      .collection('terms').where('uid', isEqualTo: '01DvmeuCwiKpX2278TIT').snapshots();
   bool isEditable = true;
   String editButtonText = "Katkı sağla";
   String editingButtonText = "Tamamla";
@@ -50,11 +49,12 @@ class _TermPageState extends State<TermPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
                     children: [
-                      TermCard('Fotoğrafçılık', '$termTitle', 'Ecrenur Mut',
-                          'https://www.upload.ee/image/13763015/diyafram__1_.png'),
+                      TermCard('Fotoğrafçılık', widget.data!.get('termTitle'), widget.data!.get('termAuthor'),
+                          widget.data!.get('termImage'),),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding:
@@ -64,7 +64,7 @@ class _TermPageState extends State<TermPage> {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  HeadlineText('$termTitle', '#000000'),
+                                  HeadlineText(widget.data!.get('termTitle'), '#000000'),
                                   Row(
                                     children: [
                                       Padding(
@@ -118,7 +118,7 @@ class _TermPageState extends State<TermPage> {
                                     Visibility(
                                         visible: isEditable,
                                         child:
-                                            BodyText('$termTitle', '#999999')),
+                                            BodyText(widget.data!.get('termMean'), '#999999')),
                                     Visibility(
                                       visible: isEditable == false,
                                       child: Column(
@@ -152,7 +152,7 @@ class _TermPageState extends State<TermPage> {
                                       child: BodyText('Örnek', '#000000'),
                                     ),
                                     BodyText(
-                                        "Analog cihazlarda diyafram butonunun çevrilmesi ile düzenlenir. Dijital cihazlarda otomatik düzenlenebilir.",
+                                        widget.data!.get('termExample'),
                                         '#999999'),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -161,7 +161,7 @@ class _TermPageState extends State<TermPage> {
                                           BodyText('Ek açıklamalar', '#000000'),
                                     ),
                                     BodyText(
-                                        "Karanlık film ve dizi sahnelerinde de diyaframı kapalı, benzeri bir kullanım görülebilir.",
+                                        widget.data!.get('termDescription'),
                                         '#999999'),
                                     Padding(
                                       padding: const EdgeInsets.only(
