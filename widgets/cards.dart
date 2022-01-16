@@ -195,35 +195,22 @@ Widget AddTermCard(categoryName, termName, termAuthor, termImageUrl) {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      height: 30,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(
-                          width: 1,
-                          color: HexColor('#F2F2F2'),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap:  () async {
-                              XFile? xFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-                              if (xFile == null) return;
-
-                              final imagePath = xFile.path;
-                              final uid = FirebaseAuth.instance.currentUser!.uid;
-                              FirebaseStorage.instance.ref('pics').child('$uid.jpg')
-                              .putFile(File(imagePath));
-                              },
-                            child: Text("Resim ekle", style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    //Container(
+                     // height: 30,
+                     // width: 100,
+                     // decoration: BoxDecoration(
+                      //  borderRadius: BorderRadius.circular(30),
+                       // border: Border.all(
+                        //  width: 1,
+                         // color: HexColor('#F2F2F2'),
+                        //),
+                      //),
+                      //child: Row(
+                      //  mainAxisAlignment: MainAxisAlignment.center,
+                       // children: [
+                        //],
+                      //),
+                    //),
                   ],
                 ),
               ],

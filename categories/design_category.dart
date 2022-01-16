@@ -164,7 +164,18 @@ class _DesignCategoryState extends State<DesignCategory> {
                                           children: snapshot.data!.docs.map((DocumentSnapshot document) {
                                             Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                                             return ListTile(
-                                              title: Text(data['termTitle']),
+                                              leading: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(30),
+                                                  child: Image.network(data['termImage'])),
+                                              title: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(context, MaterialPageRoute(
+                                                        builder: (data) => TermPage(),
+                                                      ));
+                                                    },
+                                                  child: Text(data['termTitle']
+                                                  ),
+                                              ),
                                               subtitle: Text(data['termExample']),
                                             );
                                           }).toList(),
@@ -244,7 +255,7 @@ class _AddTermPageState extends State<AddTermPage> {
                 Container(
                   child: Column(
                     children: [
-                      AddTermCard('Tasarım', 'Terim adı', 'Kerem Alan', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
+                      AddTermCard('Tasarım', 'Terim adı', '${FirebaseAuth.instance.currentUser!.displayName!}', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
                     ],
                   ),
                 ),
@@ -258,7 +269,6 @@ class _AddTermPageState extends State<AddTermPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Title2Text('Terim adı', '#000000'),
-                            Text('${FirebaseAuth.instance.currentUser!.displayName!}'),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 0),
                               child: TextFormField(

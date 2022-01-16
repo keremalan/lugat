@@ -26,6 +26,7 @@ import 'package:lugat/pages/error.dart';
 import 'package:lugat/pages/explore.dart';
 import 'package:lugat/pages/homeside.dart';
 import 'package:lugat/pages/profile.dart';
+import 'package:lugat/pages/term.dart';
 import 'package:lugat/pages/test.dart';
 import 'package:lugat/utilities/google_sign_in.dart';
 import 'categories/game_dev_category.dart';
@@ -334,10 +335,17 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  CategoryTermCard(
-                      "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                      "Prototip",
-                      "Kerem Alan"),
+                  GestureDetector(
+                    onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => TermPage(),
+              ));
+            },
+                    child: CategoryTermCard(
+                        "https://www.upload.ee/image/13731924/prototypeTerm.png",
+                        "Prototip",
+                        "Kerem Alan"),
+                  ),
                   CategoryTermCard(
                       "https://www.upload.ee/image/13757855/UI__1_.png",
                       "UI",

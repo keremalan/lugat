@@ -258,7 +258,6 @@ class _AddTermPageState extends State<AddTermPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Title2Text('Terim adı', '#000000'),
-                            Text('${FirebaseAuth.instance.currentUser!.displayName!}'),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 0),
                               child: TextFormField(

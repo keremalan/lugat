@@ -164,6 +164,14 @@ class _MetaverseCategoryState extends State<MetaverseCategory> {
                                       children: snapshot.data!.docs.map((DocumentSnapshot document) {
                                         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
                                         return ListTile(
+                                          contentPadding:EdgeInsets.all(0),
+                                          leading: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child: Image.network(data['termImage'],
+                                              width: 60,
+                                              height: 60,
+                                            ),
+                                          ),
                                           title: Text(data['termTitle']),
                                           subtitle: Text(data['termExample']),
                                         );
@@ -200,6 +208,7 @@ class _AddTermPageState extends State<AddTermPage> {
   final controller = TextEditingController();
   final Map<String, dynamic> entry = {};
   String termTitle = '';
+  String termImage = '';
   String termMeans = '';
   String termExample = '';
   String termDescription = '';
@@ -244,7 +253,7 @@ class _AddTermPageState extends State<AddTermPage> {
                 Container(
                   child: Column(
                     children: [
-                      AddTermCard('Tasarım', 'Terim adı', 'Kerem Alan', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
+                      AddTermCard('Tasarım', 'Terim adı', '${FirebaseAuth.instance.currentUser!.displayName!}', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
                     ],
                   ),
                 ),
@@ -258,7 +267,6 @@ class _AddTermPageState extends State<AddTermPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Title2Text('Terim adı', '#000000'),
-                            Text('${FirebaseAuth.instance.currentUser!.displayName!}'),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 0),
                               child: TextFormField(
@@ -292,6 +300,35 @@ class _AddTermPageState extends State<AddTermPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: BodyText('Görseli', '#000000'),
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Terimin görseli bırakılmamalıdır';
+                              } return null;
+                            },
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            style: TextStyle(
+                              color: HexColor('#999999'),
+                            ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Url eklemek için buraya dokun",
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                termImage = value;
+                                termCategory = 'Metaverse';
+                              });
+                            },
+                            onSaved: (newValue) {
+                              entry['termImage'] = newValue;
+                            },
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
                             child: BodyText('Akla gelen ilk anlamı', '#000000'),
@@ -398,7 +435,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
+                                      'termTitle': termTitle, 'termCategory': termCategory,'termImage': termImage, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
                                     });
 
 

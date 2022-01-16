@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -23,6 +24,8 @@ class TermPage extends StatefulWidget {
 }
 
 class _TermPageState extends State<TermPage> {
+  final Stream<QuerySnapshot> _termStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '01DvmeuCwiKpX2278TIT').snapshots();
   bool isEditable = true;
   String editButtonText = "Katkı sağla";
   String editingButtonText = "Tamamla";

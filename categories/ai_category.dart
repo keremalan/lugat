@@ -244,7 +244,7 @@ class _AddTermPageState extends State<AddTermPage> {
                 Container(
                   child: Column(
                     children: [
-                      AddTermCard('Tasarım', 'Terim adı', 'Kerem Alan', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
+                      AddTermCard('Tasarım', 'Terim adı', '${FirebaseAuth.instance.currentUser!.displayName!}', 'https://www.upload.ee/image/13741477/Rectangle_39.png'),
                     ],
                   ),
                 ),
@@ -258,7 +258,6 @@ class _AddTermPageState extends State<AddTermPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Title2Text('Terim adı', '#000000'),
-                            Text('${FirebaseAuth.instance.currentUser!.displayName!}'),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 0),
                               child: TextFormField(
