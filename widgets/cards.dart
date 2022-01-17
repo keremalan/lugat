@@ -370,7 +370,7 @@ class CategoryOverview extends StatefulWidget {
 }
 class _CategoryOverviewState extends State<CategoryOverview> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where("termCategory", isEqualTo: "Design").snapshots();
+      .collection('terms').where("termCategory", isEqualTo: "Design").limit(3).snapshots();
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -399,47 +399,63 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                       final String termAuthor = data['termAuthor'];
                       final String termCategory = data['termCategory'];
                       final bool isSaved = data['isSaved'];
-                      return Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.network(data['termImage'],
-                            height: 100,
-                            width: 100,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                              height: 124,
+                              width: 124,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: Text(data['termTitle'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,),
-                          ),
-                          Text(data['termAuthor'],
-                          style: TextStyle(
-                            fontSize: 12
-                          ),),
-                        ],
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                            ),
+                          ],
+                        ),
                       );
                     }
                 ).toList();
                 return SingleChildScrollView(
-                  child: GridView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: items.length,
-                      padding: const EdgeInsets.all(0),
-                      itemBuilder: (BuildContext context, int index) {
-                        return items[index];
-                      }
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                      scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
                   ),
                 );
               }else{
                 return Column(
                   children: [
+                    Text("Bir hata meydana geldi!"),
                   ],
                 );
               }
