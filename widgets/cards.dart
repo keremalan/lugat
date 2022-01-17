@@ -114,7 +114,7 @@ Widget TermCard(categoryName, termName, termAuthor, termImageUrl) {
         borderRadius: BorderRadius.circular(0),
         image: DecorationImage(
           image: NetworkImage("${termImageUrl}"),
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.18), BlendMode.darken, 
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.18), BlendMode.darken,
         ),
           fit: BoxFit.cover,
         ),
@@ -368,10 +368,9 @@ class CategoryOverview extends StatefulWidget {
   @override
   _CategoryOverviewState createState() => _CategoryOverviewState();
 }
-
 class _CategoryOverviewState extends State<CategoryOverview> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('termCategory', isEqualTo: 'Design').snapshots();
+      .collection('terms').where("termCategory", isEqualTo: "Design").snapshots();
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -380,61 +379,74 @@ class _CategoryOverviewState extends State<CategoryOverview> {
         child: StreamBuilder<QuerySnapshot>(
           stream: _termsStream,
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-            if (snapshot.hasError) {
-              return Text('Bir şeyler ters gitmiş olmalı.');
-            }
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
 
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('Şu anda içerik yükleniyor.');
-            }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
 
-            return MediaQuery.removePadding(
-              removeTop: true,
-              context: context,
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
-                  final String termTitle = data.get('termTitle');
-                  final String termImage = data['termImage'];
-                  final String termMean = data['termMean'];
-                  final String termExample = data['termExample'];
-                  final String termDescription = data['termDescription'];
-                  final String termAuthor = data['termAuthor'];
-                  final String termCategory = data['termCategory'];
-                  final bool isSaved = data['isSaved'];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => TermPage(data: data,)));
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.network(data['termImage'],
-                            width: 124,
-                            height: 124,),
-                        ),
-                        SizedBox(
-                          width: 106,
-                          child: Text(data['termTitle'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),),
-                        ),
-                        Text(data['termAuthor'],
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(data['termImage'],
+                            height: 100,
+                            width: 100,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(data['termTitle'],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,),
+                          ),
+                          Text(data['termAuthor'],
                           style: TextStyle(
-                              color: Colors.black.withOpacity(0.6)
+                            fontSize: 12
                           ),),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
+                        ],
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: GridView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: items.length,
+                      padding: const EdgeInsets.all(0),
+                      itemBuilder: (BuildContext context, int index) {
+                        return items[index];
+                      }
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
           },
         ),
       ),

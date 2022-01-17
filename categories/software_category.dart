@@ -189,10 +189,16 @@ class _SoftwareCategoryState extends State<SoftwareCategory> {
                                                   fontSize: 16
                                               ),
                                             ),
-                                            subtitle: Text(data['termExample'],
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                              ),),
+                                            subtitle: SizedBox(
+                                              width: 120,
+                                              child: Text(data['termExample'],
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: false,
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                ),),
+                                            ),
                                           ),
                                         );
                                       }).toList(),
