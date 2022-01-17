@@ -236,6 +236,7 @@ class _AddTermPageState extends State<AddTermPage> {
   String termCategory = '';
   String _myActivityResult = '';
   String uid = '';
+  String termImage = '';
 
   @override
   void initState() {
@@ -319,6 +320,35 @@ class _AddTermPageState extends State<AddTermPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: BodyText('Görseli', '#000000'),
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Terimin görseli bırakılmamalıdır';
+                              } return null;
+                            },
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            style: TextStyle(
+                              color: HexColor('#999999'),
+                            ),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Url eklemek için buraya dokun",
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                termImage = value;
+                                termCategory = 'FrontEnd';
+                              });
+                            },
+                            onSaved: (newValue) {
+                              entry['termImage'] = newValue;
+                            },
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 16),
                             child: BodyText('Akla gelen ilk anlamı', '#000000'),
@@ -425,7 +455,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
+                                      'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
                                     });
 
 
