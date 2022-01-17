@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lugat/model/term.dart';
 import 'package:lugat/pages/category.dart';
 import 'package:lugat/pages/term.dart';
 import 'texts.dart';
@@ -113,6 +114,8 @@ Widget TermCard(categoryName, termName, termAuthor, termImageUrl) {
         borderRadius: BorderRadius.circular(0),
         image: DecorationImage(
           image: NetworkImage("${termImageUrl}"),
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.18), BlendMode.darken, 
+        ),
           fit: BoxFit.cover,
         ),
       ),
@@ -406,21 +409,26 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                           builder: (context) => TermPage(data: data,)));
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(data['termImage'],
-                        width: 100,),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(data['termImage'],
+                            width: 124,
+                            height: 124,),
+                        ),
                         SizedBox(
                           width: 106,
                           child: Text(data['termTitle'],
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),),
                         ),
                         Text(data['termAuthor'],
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.6)
-                        ),),
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.6)
+                          ),),
                       ],
                     ),
                   );
