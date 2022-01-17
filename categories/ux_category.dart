@@ -182,11 +182,11 @@ class _UxCategoryState extends State<UxCategory> {
                                           },
                                           child: ListTile(
                                             contentPadding:EdgeInsets.all(0),
-                                            leading: ClipRRect(
-                                              borderRadius: BorderRadius.circular(3),
+                                            leading: ClipOval(
                                               child: Image.network(data['termImage'],
-                                                width: 40,
-                                                height: 40,
+                                                height: 50,
+                                                width: 50,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                             title: Text(data['termTitle'],
