@@ -325,42 +325,8 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(top: 22, bottom: 2),
               child: DescriptionText("Kategoriler"),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()),
-                );
-              },
-                child: CategoryTitle("Tasarım")),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => TermPage(),
-              ));
-            },
-                    child: CategoryTermCard(
-                        "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                        "Prototip",
-                        "Kerem Alan"),
-                  ),
-                  CategoryTermCard(
-                      "https://www.upload.ee/image/13757855/UI__1_.png",
-                      "UI",
-                      "Gökhan Falan"),
-                  CategoryTermCard(
-                      "https://www.upload.ee/image/13757856/UX.png",
-                      "UX",
-                      "Türkmen Köyhan"),
-                  CategoryTermCard(
-                      "https://www.upload.ee/image/13731924/prototypeTerm.png",
-                      "Krototip",
-                      "Uğur Taylan"),
-                ],
-              ),
-            ),
+            CategoryTitle('Tasarım'),
+            CategoryOverview(),
             GestureDetector(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SoftwareCategory()),

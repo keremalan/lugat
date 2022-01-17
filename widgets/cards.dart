@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lugat/pages/category.dart';
+import 'package:lugat/pages/term.dart';
 import 'texts.dart';
 import 'buttons.dart';
 import 'package:http/http.dart';
@@ -354,6 +356,84 @@ Widget ExploreTermCard(termName, termAuthor, termImageUrl) {
     ],
   );
 }
+
+class CategoryOverview extends StatefulWidget {
+  CategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _CategoryOverviewState createState() => _CategoryOverviewState();
+}
+
+class _CategoryOverviewState extends State<CategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where('termCategory', isEqualTo: 'Design').snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            if (snapshot.hasError) {
+              return Text('Bir şeyler ters gitmiş olmalı.');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text('Şu anda içerik yükleniyor.');
+            }
+
+            return MediaQuery.removePadding(
+              removeTop: true,
+              context: context,
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                  final String termTitle = data.get('termTitle');
+                  final String termImage = data['termImage'];
+                  final String termMean = data['termMean'];
+                  final String termExample = data['termExample'];
+                  final String termDescription = data['termDescription'];
+                  final String termAuthor = data['termAuthor'];
+                  final String termCategory = data['termCategory'];
+                  final bool isSaved = data['isSaved'];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => TermPage(data: data,)));
+                    },
+                    child: Column(
+                      children: [
+                        Image.network(data['termImage'],
+                        width: 100,),
+                        SizedBox(
+                          width: 106,
+                          child: Text(data['termTitle'],
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),),
+                        ),
+                        Text(data['termAuthor'],
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.6)
+                        ),),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
 
 Widget FilledButton2(buttonWidth, fillColor, captionTextColor, buttonText) {
   return SizedBox(
