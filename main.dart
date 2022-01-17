@@ -326,39 +326,11 @@ class _HomePageState extends State<HomePage> {
               child: DescriptionText("Kategoriler"),
             ),
             CategoryTitle('Tasarım'),
-            CategoryOverview(),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SoftwareCategory()),
-                );
-              },
-                child: CategoryTitle("Yazılım")),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 18),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoryTermCard(
-                        "https://www.upload.ee/image/13757844/front-end.png",
-                        "Front-end",
-                        "Kerem Alan"),
-                    CategoryTermCard(
-                        "https://www.upload.ee/image/13757847/back-end.png",
-                        "Back-end",
-                        "Gökhan Falan"),
-                    CategoryTermCard(
-                        "https://www.upload.ee/image/13731960/softwareTerm.png",
-                        "Git",
-                        "Türkmen Köyhan"),
-                    CategoryTermCard(
-                        "https://www.upload.ee/image/13731960/softwareTerm.png",
-                        "Krototip",
-                        "Uğur Taylan"),
-                  ],
-                ),
-              ),
-            ),
+            DesignCategoryOverview(),
+            CategoryTitle('Yazılım'),
+            SoftwareCategoryOverview(),
+            CategoryTitle('Oyun Geliştirme'),
+            GameDevCategoryOverview(),
           ],
         ),
       ),

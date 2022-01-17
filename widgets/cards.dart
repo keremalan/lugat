@@ -360,17 +360,17 @@ Widget ExploreTermCard(termName, termAuthor, termImageUrl) {
   );
 }
 
-class CategoryOverview extends StatefulWidget {
-  CategoryOverview({
+class DesignCategoryOverview extends StatefulWidget {
+  DesignCategoryOverview({
     Key? key,
   }) : super(key: key);
 
   @override
-  _CategoryOverviewState createState() => _CategoryOverviewState();
+  _DesignCategoryOverviewState createState() => _DesignCategoryOverviewState();
 }
-class _CategoryOverviewState extends State<CategoryOverview> {
+class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where("termCategory", isEqualTo: "Design").limit(3).snapshots();
+      .collection('terms').where("termCategory", isEqualTo: 'Design').limit(3).snapshots();
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -439,6 +439,998 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
                       scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class SoftwareCategoryOverview extends StatefulWidget {
+  SoftwareCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _SoftwareCategoryOverviewState createState() => _SoftwareCategoryOverviewState();
+}
+class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'Software').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class GameDevCategoryOverview extends StatefulWidget {
+  GameDevCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _GameDevCategoryOverviewState createState() => _GameDevCategoryOverviewState();
+}
+class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'GameDev').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryOverview extends StatefulWidget {
+  CategoryOverview({
+    Key? key,
+    required this.termCategoryName,
+  }) : super(key: key);
+  final String termCategoryName;
+
+  @override
+  _CategoryOverviewState createState() => _CategoryOverviewState();
+}
+class _CategoryOverviewState extends State<CategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: '').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class UXCategoryOverview extends StatefulWidget {
+  UXCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _UXCategoryOverviewState createState() => _UXCategoryOverviewState();
+}
+class _UXCategoryOverviewState extends State<UXCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'UX').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class FrontEndCategoryOverview extends StatefulWidget {
+  FrontEndCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _FrontEndCategoryOverviewState createState() => _FrontEndCategoryOverviewState();
+}
+class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'FrontEnd').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class AiCategoryOverview extends StatefulWidget {
+  AiCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _AiCategoryOverviewState createState() => _AiCategoryOverviewState();
+}
+class _AiCategoryOverviewState extends State<AiCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'Ai').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class MetaverseCategoryOverview extends StatefulWidget {
+  MetaverseCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _MetaverseCategoryOverviewState createState() => _MetaverseCategoryOverviewState();
+}
+class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'Metaverse').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class UICategoryOverview extends StatefulWidget {
+  UICategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _UICategoryOverviewState createState() => _UICategoryOverviewState();
+}
+class _UICategoryOverviewState extends State<UICategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'UI').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }
+                    ),
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class BackEndCategoryOverview extends StatefulWidget {
+  BackEndCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _BackEndCategoryOverviewState createState() => _BackEndCategoryOverviewState();
+}
+class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'BackEnd').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 124,
+                                width: 124,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,

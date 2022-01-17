@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:lugat/categories/design_category.dart';
+import 'package:lugat/categories/front_end_category.dart';
+import 'package:lugat/categories/metaverse_category.dart';
 import 'package:lugat/main.dart';
 import 'package:lugat/pages/profile.dart';
 import '../widgets/cards.dart';
@@ -50,16 +53,37 @@ class _ExplorePageState extends State<ExplorePage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: ExploreCategoryCard('Tasarım',
-                            "https://www.upload.ee/image/13731805/designCategory.png"),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => DesignCategory(),
+                            ));
+                          },
+                          child: ExploreCategoryCard('Tasarım',
+                              "https://www.upload.ee/image/13731805/designCategory.png"),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: ExploreCategoryCard('Metaverse',
-                            "https://www.upload.ee/image/13757839/metaverse.png"),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => MetaverseCategory(),
+                            ));
+                          },
+                          child: ExploreCategoryCard('Metaverse',
+                              "https://www.upload.ee/image/13757839/metaverse.png"),
+                        ),
                       ),
-                      ExploreCategoryCard('Front-end',
-                          "https://www.upload.ee/image/13757844/front-end.png"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => FrontendCategory(),
+                          ));
+                        },
+                        child: ExploreCategoryCard('Front-end',
+                            "https://www.upload.ee/image/13757844/front-end.png"),
+                      ),
                     ],
                   ),
                 ),
@@ -71,90 +95,18 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   ],
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                              'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                              'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                                'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                          ),
-                          ExploreTermCard('Variables', 'Duygu Gençdoğan',
-                              'https://www.upload.ee/image/13741353/variablesTerm.png'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                CategoryTitle('Back-end'),
+                BackEndCategoryOverview(),
+                CategoryTitle('UI'),
+                UICategoryOverview(),
+                CategoryTitle('UX'),
+                UXCategoryOverview(),
+                CategoryTitle('Metaverse'),
+                MetaverseCategoryOverview(),
+                CategoryTitle('Yapay Zeka'),
+                AiCategoryOverview(),
+                CategoryTitle('Front-end'),
+                FrontEndCategoryOverview(),
               ],
             ),
           ),
