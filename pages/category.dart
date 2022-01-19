@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../widgets/divider.dart';
@@ -275,62 +274,6 @@ class _AddTermPageState extends State<AddTermPage> {
                                   entry['titleName'] = newValue;
                                 },
                               ),
-                            ),
-                            DropDownFormField(
-                              titleText: 'Kategori',
-                              hintText: 'Kategori seçmek için buraya dokunun',
-                              value: _myActivity,
-                              onSaved: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  _myActivity = value;
-                                });
-                                termCategory = value;
-                              },
-                              dataSource: [
-                                {
-                                  "display": "Tasarım",
-                                  "value": "Design",
-                                },
-                                {
-                                  "display": "Yazılım",
-                                  "value": "Software",
-                                },
-                                {
-                                  "display": "Fotoğrafçılık",
-                                  "value": "Photography",
-                                },
-                                {
-                                  "display": "Yapay Zeka",
-                                  "value": "Ai",
-                                },
-                                {
-                                  "display": "Metaverse",
-                                  "value": "Metaverse",
-                                },
-                                {
-                                  "display": "Front-end Developer",
-                                  "value": "FrontEnd",
-                                },
-                                {
-                                  "display": "Back-end Developer",
-                                  "value": "BackEnd",
-                                },
-                                {
-                                  "display": "UI",
-                                  "value": "UI",
-                                },
-                                {
-                                  "display": "UX",
-                                  "value": "UX",
-                                },
-                              ],
-                              textField: 'display',
-                              valueField: 'value',
                             ),
                           ],
                         ),

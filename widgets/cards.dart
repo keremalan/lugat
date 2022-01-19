@@ -269,8 +269,8 @@ Widget CategoryTermCard(termImageUrl, termName, termAuthorName) {
                 borderRadius: BorderRadius.circular(9),
                 child: Image.network(
                   "${termImageUrl}",
-                  height: 124,
-                  width: 124,
+                  height: 112,
+                  width: 112,
                 ),
               ),
               Padding(
@@ -410,8 +410,8 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                              height: 124,
-                              width: 124,
+                              height: 112,
+                              width: 112,
                               ),
                             ),
                             SizedBox(
@@ -520,8 +520,8 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -630,8 +630,8 @@ class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -742,8 +742,8 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -852,8 +852,8 @@ class _UXCategoryOverviewState extends State<UXCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -962,8 +962,8 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -1072,8 +1072,8 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -1182,8 +1182,8 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -1292,8 +1292,8 @@ class _UICategoryOverviewState extends State<UICategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(
@@ -1402,8 +1402,8 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 124,
-                                width: 124,
+                                height: 112,
+                                width: 112,
                               ),
                             ),
                             SizedBox(

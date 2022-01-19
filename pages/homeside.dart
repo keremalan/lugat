@@ -122,7 +122,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),
@@ -264,7 +264,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),
@@ -425,7 +425,7 @@ class _HelpPageState extends State<HelpPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),
@@ -527,7 +527,7 @@ class _ReportPageState extends State<ReportPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),
@@ -698,7 +698,7 @@ class _ReportSuccessPageState extends State<ReportSuccessPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),
@@ -896,7 +896,7 @@ class _RoadMapPageState extends State<RoadMapPage> {
           child: Column(
             children: [
               Container(
-                height: 22.6.h,
+                height: 28.6.h,
                 decoration: BoxDecoration(
                   color: HexColor("#E5E5E5"),
                 ),

@@ -39,7 +39,11 @@ import 'package:sizer/sizer.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(ProviderScope(child: Lugat()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(Lugat());
+}
 
 // Home Page
 
@@ -325,11 +329,26 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(top: 22, bottom: 2),
               child: DescriptionText("Kategoriler"),
             ),
-            CategoryTitle('Tasarım'),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));
+              },
+                child: CategoryTitle('Tasarım'),
+            ),
             DesignCategoryOverview(),
-            CategoryTitle('Yazılım'),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SoftwareCategory()));
+              },
+                child: CategoryTitle('Yazılım'),
+            ),
             SoftwareCategoryOverview(),
-            CategoryTitle('Oyun Geliştirme'),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GameDevCategory()));
+              },
+                child: CategoryTitle('Oyun Geliştirme'),
+            ),
             GameDevCategoryOverview(),
           ],
         ),

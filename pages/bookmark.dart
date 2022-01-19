@@ -43,53 +43,23 @@ class _BookmarkPageState extends State<BookmarkPage> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Container(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             HeadlineText('Kaydettiklerim', '#000000'),
                           ],
                         ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text("Kayıtlı bir teriminiz bulunmuyor.",
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.4)
+                        ),),
                       ],
                     ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: DescriptionText('Son kaydettiklerim'),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => TermPage(),
-                        ));
-                      },
-                        child: TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs...")),
-                    Divider(),
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs..."),
-                    Divider(),
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs..."),
-                    Divider(),
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Ürün geliştirme sürecinde ürünün kıs..."),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24, bottom: 8),
-                      child: DescriptionText('Tüm kaydettiklerim'),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    TermOverviewCard(termImageUrl: 'https://www.upload.ee/image/13741255/circuitTerm.png', termName: 'Circuit', termDescription: 'Kart tasarımı için kullanılan mantıksa...')
-                  ],
                 ),
               ],
             ),

@@ -498,7 +498,7 @@ class _TermOverviewCardState extends State<TermOverviewCard> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const TermPage()),
+                                    const Home()),
                               );
                             },
                             child: Caption1Text("Katkı sağla", "#000000"),
@@ -515,7 +515,7 @@ class _TermOverviewCardState extends State<TermOverviewCard> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const TermPage()),
+                                    const ReportPage()),
                               );
                             },
                             child: Caption1Text("Bildir", "#000000"),
@@ -1169,9 +1169,9 @@ class _NotificationPageState extends State<NotificationPage> {
                 ),
                 Column(
                   children: [
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Düzenlediğiniz terim 24 yeni beğeni aldı."),
+                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "24 yeni beğeni."),
                     Divider(color: HexColor('#F8F8F8')),
-                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Eklediğiniz terimi bir moderatör onaylandı."),
+                    TermOverviewCard(termImageUrl: "https://www.upload.ee/image/13731924/prototypeTerm.png", termName: "Prototip", termDescription: "Moderatör tarafından onaylandı."),
                   ],
                 ),
                 Row(
