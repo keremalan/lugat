@@ -1,6 +1,6 @@
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -30,7 +30,15 @@ class _TermPageState extends State<TermPage> {
   String editingButtonText = "Tamamla";
   bool isVisible = true;
   final _controller = TextEditingController();
-  String termTitle = "Diyafram";
+  final _controller2 = TextEditingController();
+  final _controller3 = TextEditingController();
+  final _controller4 = TextEditingController();
+  final _controller5 = TextEditingController();
+  String termTitle = "Adını düzenleyin";
+  String termExample = "Örneği düzenleyin";
+  String termMean = "Akla gelen ilk anlamını düzenleyin";
+  String termDescription = "Ek açıklamaları düzenleyin";
+  String termImage = "Görseli düzenleyin";
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -113,12 +121,12 @@ class _TermPageState extends State<TermPage> {
                                     Padding(
                                       padding: const EdgeInsets.only(bottom: 4),
                                       child: BodyText(
-                                          'Akla gelen ilk anlamı', '#000000'),
+                                          'Terim adı', '#000000'),
                                     ),
                                     Visibility(
                                         visible: isEditable,
                                         child:
-                                            BodyText(widget.data!.get('termMean'), '#999999')),
+                                            BodyText(widget.data!.get('termTitle'), '#999999')),
                                     Visibility(
                                       visible: isEditable == false,
                                       child: Column(
@@ -131,10 +139,90 @@ class _TermPageState extends State<TermPage> {
                                               }
                                               return null;
                                             },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                termTitle = value;
+                                              });
+                                            },
                                             maxLength: 16,
                                             controller: _controller,
                                             decoration: InputDecoration(
-                                              hintText: '$termTitle',
+                                              hintText: 'Adını düzenleyin',
+                                              suffixIcon: TextButton(
+                                                  onPressed: () {
+                                                    _formKey.currentState!
+                                                        .validate();
+                                                  },
+                                                  child: Icon(Icons.check)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Visibility(
+                                        visible: isEditable == false,
+                                        child:
+                                        BodyText('Terimin görseli', '#999999')),
+                                    Visibility(
+                                      visible: isEditable == false,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Terimin görseli boş bırakılamaz!';
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                termImage = value;
+                                              });
+                                            },
+                                            controller: _controller5,
+                                            decoration: InputDecoration(
+                                              hintText: 'Görselin URL adresini düzenleyin',
+                                              suffixIcon: TextButton(
+                                                  onPressed: () {
+                                                    _formKey.currentState!
+                                                        .validate();
+                                                  },
+                                                  child: Icon(Icons.check)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 22, bottom: 4),
+                                      child: BodyText('Akla gelen ilk anlamı', '#000000'),
+                                    ),
+                                    Visibility(
+                                        visible: isEditable,
+                                        child:
+                                        BodyText(widget.data!.get('termExample'), '#999999')),
+                                    Visibility(
+                                      visible: isEditable == false,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Akla gelen ilk anlamı boş bırakılamaz!';
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                termMean = value;
+                                              });
+                                            },
+                                            controller: _controller2,
+                                            decoration: InputDecoration(
+                                              hintText: 'Akla gelen ilk anlamını düzenleyin',
                                               suffixIcon: TextButton(
                                                   onPressed: () {
                                                     _formKey.currentState!
@@ -151,18 +239,81 @@ class _TermPageState extends State<TermPage> {
                                           top: 22, bottom: 4),
                                       child: BodyText('Örnek', '#000000'),
                                     ),
-                                    BodyText(
-                                        widget.data!.get('termExample'),
-                                        '#999999'),
+                                    Visibility(
+                                        visible: isEditable,
+                                        child:
+                                        BodyText(widget.data!.get('termExample'), '#999999')),
+                                    Visibility(
+                                      visible: isEditable == false,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Örnek boş bırakılamaz!';
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                termExample = value;
+                                              });
+                                            },
+                                            controller: _controller3,
+                                            decoration: InputDecoration(
+                                              hintText: 'Örneği düzenleyin',
+                                              suffixIcon: TextButton(
+                                                  onPressed: () {
+                                                    _formKey.currentState!
+                                                        .validate();
+                                                  },
+                                                  child: Icon(Icons.check)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 22, bottom: 4),
-                                      child:
-                                          BodyText('Ek açıklamalar', '#000000'),
+                                      child: BodyText('Ek açıklamalar', '#000000'),
                                     ),
-                                    BodyText(
-                                        widget.data!.get('termDescription'),
-                                        '#999999'),
+                                    Visibility(
+                                        visible: isEditable,
+                                        child:
+                                        BodyText(widget.data!.get('termExample'), '#999999')),
+                                    Visibility(
+                                      visible: isEditable == false,
+                                      child: Column(
+                                        children: [
+                                          TextFormField(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Ek açıklamalar boş bırakılamaz!';
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                termDescription = value;
+                                              });
+                                            },
+                                            controller: _controller4,
+                                            decoration: InputDecoration(
+                                              hintText: 'Ek açıklamaları düzenleyin',
+                                              suffixIcon: TextButton(
+                                                  onPressed: () {
+                                                    _formKey.currentState!
+                                                        .validate();
+                                                  },
+                                                  child: Icon(Icons.check)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           top: 22, bottom: 22),
@@ -182,10 +333,19 @@ class _TermPageState extends State<TermPage> {
                                                         HexColor('#007AFF')),
                                               ),
                                               onPressed: () {
+                                                final formState = _formKey.currentState;
+                                                if (formState == null) return;
+                                                if (formState.validate() == true) {
+                                                  formState.save();
+                                                  FirebaseFirestore.instance.collection('contributes').add({
+                                                    'termTitle': termTitle, 'termMean': termMean, 'termExample': termExample, 'termDescription': termDescription, 'termImage': termImage, 'termAuthor': FirebaseAuth.instance.currentUser!.displayName!,
+                                                  });
+                                                }
                                                 setState(() {
                                                   isEditable = !isEditable;
                                                   termTitle = _controller.text;
                                                 });
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ContributeSuccess()));
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
@@ -263,6 +423,53 @@ class _TermPageState extends State<TermPage> {
     );
   }
 }
+
+class ContributeSuccess extends StatelessWidget {
+  const ContributeSuccess({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          LugatAppBarTerm(),
+          Image.network("https://www.upload.ee/image/13812439/done.png",
+          height: 48,
+          width: 48,),
+          SizedBox(height: 16),
+          Container(
+            child: Column(
+              children: [
+                Text("Düzenlemeleriniz başarıyla kaydedildi.", style: TextStyle(color: HexColor('#0A621D'), fontSize: 18, fontWeight: FontWeight.w600)),
+                SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text("Moderatörlerin incelemesinden sonra gerekli değişiklikler yapılacaktır.", textAlign: TextAlign.center, style: TextStyle(color: HexColor('#063E13'), fontSize: 12)),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 32),
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context, MaterialPageRoute(builder: (context)=> Home()));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: HexColor('#063E13'),
+                borderRadius: BorderRadius.circular(30),
+              ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+                  child: Text("Anasayfa'ya dönmek için tıklayın", style: TextStyle(color: HexColor('#FFFFFF')),),
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 class LugatAppBarTerm extends StatelessWidget implements PreferredSizeWidget {
   LugatAppBarTerm({Key? key}) : super(key: key);
