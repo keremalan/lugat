@@ -127,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
               goHome();
             }, child: Container(
-              width: 42.w,
+              width: 54.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
@@ -436,9 +436,7 @@ class MyAppThemes {
       backgroundColor: HexColor('#FFFFFF'),
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: HexColor('#FFFFF'),
-        ),
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
         color: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black,

@@ -271,6 +271,7 @@ Widget CategoryTermCard(termImageUrl, termName, termAuthorName) {
                   "${termImageUrl}",
                   height: 112,
                   width: 112,
+                  fit: BoxFit.cover,
                 ),
               ),
               Padding(
@@ -412,6 +413,7 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                               child: Image.network(data['termImage'],
                               height: 112,
                               width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -434,22 +436,20 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                       );
                     }
                 ).toList();
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    child: GridView.builder(
-                      scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 1 / 1.4,
-                          crossAxisCount: 3,
-                        ),
-                        itemCount: items.length,
-                        padding: const EdgeInsets.only(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return items[index];
-                        }
-                    ),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: GridView.builder(
+                    primary: false,
+                      shrinkWrap: true,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1 / 1.4,
+                        crossAxisCount: 3,
+                      ),
+                      itemCount: items.length,
+                      padding: const EdgeInsets.only(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return items[index];
+                      }
                   ),
                 );
               }else{
@@ -522,6 +522,7 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -548,7 +549,7 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -632,6 +633,7 @@ class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -654,22 +656,20 @@ class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
                       );
                     }
                 ).toList();
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2),
-                    child: GridView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 1 / 1.4,
-                          crossAxisCount: 3,
-                        ),
-                        itemCount: items.length,
-                        padding: const EdgeInsets.only(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return items[index];
-                        }
-                    ),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: GridView.builder(
+                    primary: false,
+                      shrinkWrap: true,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1 / 1.4,
+                        crossAxisCount: 3,
+                      ),
+                      itemCount: items.length,
+                      padding: const EdgeInsets.only(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return items[index];
+                      }
                   ),
                 );
               }else{
@@ -744,6 +744,7 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -854,6 +855,7 @@ class _UXCategoryOverviewState extends State<UXCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -880,7 +882,7 @@ class _UXCategoryOverviewState extends State<UXCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                      primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -964,6 +966,7 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -990,7 +993,7 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -1074,6 +1077,7 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -1100,7 +1104,7 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -1184,6 +1188,7 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -1210,7 +1215,7 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -1294,6 +1299,7 @@ class _UICategoryOverviewState extends State<UICategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -1320,7 +1326,7 @@ class _UICategoryOverviewState extends State<UICategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
@@ -1404,6 +1410,7 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                               child: Image.network(data['termImage'],
                                 height: 112,
                                 width: 112,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
@@ -1430,7 +1437,7 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: GridView.builder(
-                        scrollDirection: Axis.vertical,
+                        primary: false,
                         shrinkWrap: true,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,

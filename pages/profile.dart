@@ -941,10 +941,6 @@ class _ProfileSettingsSecurityState extends State<ProfileSettingsSecurity> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: ProfileSettingsPersonalItem(itemText: 'Telefon', itemDescription: '$userPhone',),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
                               child: ProfileSettingsPersonalItem(itemText: 'Şifre', itemDescription: '********',),
                             ),
                           ],

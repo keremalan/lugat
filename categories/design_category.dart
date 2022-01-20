@@ -222,7 +222,7 @@ class AddTermPage extends StatefulWidget {
   _AddTermPageState createState() => _AddTermPageState();
 }
 
-class _AddTermPageState extends State<AddTermPage> {
+class _AddTermPageState extends State<AddTermPage>{
   final _formKey = GlobalKey<FormState>();
   final controller = TextEditingController();
   final Map<String, dynamic> entry = {};
