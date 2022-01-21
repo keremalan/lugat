@@ -427,6 +427,7 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                             ),
                             Text(data['termAuthor'],
                             style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
                               fontSize: 12,
                               color: Colors.black.withOpacity(0.4),
                             ),
@@ -538,6 +539,7 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -649,6 +651,7 @@ class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -760,6 +763,7 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -871,6 +875,7 @@ class _UXCategoryOverviewState extends State<UXCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -982,6 +987,7 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -1093,6 +1099,7 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -1204,6 +1211,7 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -1315,6 +1323,7 @@ class _UICategoryOverviewState extends State<UICategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -1426,6 +1435,7 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black.withOpacity(0.4),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],

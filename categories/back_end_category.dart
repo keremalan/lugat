@@ -191,6 +191,7 @@ class _BackendCategoryState extends State<BackendCategory> {
                                             subtitle: Text(data['termExample'],
                                               style: TextStyle(
                                                 fontSize: 13,
+                                                overflow: TextOverflow.ellipsis,
                                               ),),
                                           ),
                                         );

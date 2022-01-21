@@ -191,6 +191,7 @@ class _DesignCategoryState extends State<DesignCategory> {
                                                 subtitle: Text(data['termExample'],
                                                   style: TextStyle(
                                                     fontSize: 13,
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),),
                                               ),
                                             );

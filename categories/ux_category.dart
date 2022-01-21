@@ -196,6 +196,7 @@ class _UxCategoryState extends State<UxCategory> {
                                             subtitle: Text(data['termExample'],
                                               style: TextStyle(
                                                 fontSize: 13,
+                                                overflow: TextOverflow.ellipsis,
                                               ),),
                                           ),
                                         );

@@ -191,6 +191,7 @@ class _MetaverseCategoryState extends State<MetaverseCategory> {
                                             subtitle: Text(data['termExample'],
                                             style: TextStyle(
                                               fontSize: 13,
+                                              overflow: TextOverflow.ellipsis,
                                             ),),
                                           ),
                                         );

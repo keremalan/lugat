@@ -191,6 +191,7 @@ class _FrontendCategoryState extends State<FrontendCategory> {
                                             subtitle: Text(data['termExample'],
                                               style: TextStyle(
                                                 fontSize: 13,
+                                                overflow: TextOverflow.ellipsis,
                                               ),),
                                           ),
                                         );

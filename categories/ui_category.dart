@@ -191,6 +191,7 @@ class _UiCategoryState extends State<UiCategory> {
                                             subtitle: Text(data['termExample'],
                                               style: TextStyle(
                                                 fontSize: 13,
+                                                overflow: TextOverflow.ellipsis,
                                               ),),
                                           ),
                                         );

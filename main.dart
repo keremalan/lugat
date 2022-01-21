@@ -369,26 +369,25 @@ class LugatAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       centerTitle: false,
-      title: const Padding(
-        padding: EdgeInsets.only(left: 10),
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 16.2),
         child: Text(
           "Lügat",
           style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
         ),
       ),
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const HomeSide()),
-              );
-            },
-            child: const Icon(Icons.menu),
-          ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) => const HomeSide()),
+            );
+          },
+          child: const Icon(Icons.menu),
         ),
       ],
     );
@@ -436,7 +435,7 @@ class MyAppThemes {
       backgroundColor: HexColor('#FFFFFF'),
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: HexColor('#DBDBDB')),
         color: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black,

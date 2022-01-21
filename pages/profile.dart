@@ -1237,22 +1237,19 @@ class LugatAppBarProfile extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 14.0),
+      padding: const EdgeInsets.only(top: 12.0),
       child: AppBar(
         centerTitle: false,
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 12),
-          child: Text(
-            "Profil",
-            style: TextStyle(
-              color: Colors.black,
-            ),
+        title: Text(
+          "Profil",
+          style: TextStyle(
+            color: Colors.black,
           ),
         ),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 16),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(

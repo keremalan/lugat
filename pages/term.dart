@@ -75,12 +75,6 @@ class _TermPageState extends State<TermPage> {
                                   HeadlineText(widget.data!.get('termTitle'), '#000000'),
                                   Row(
                                     children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
-                                        child: Caption2Text(
-                                            'Önerileri incele', '#001FC6'),
-                                      ),
                                       Visibility(
                                         visible: isEditable,
                                         child: SizedBox(
@@ -202,7 +196,7 @@ class _TermPageState extends State<TermPage> {
                                     Visibility(
                                         visible: isEditable,
                                         child:
-                                        BodyText(widget.data!.get('termExample'), '#999999')),
+                                        BodyText(widget.data!.get('termMean'), '#999999')),
                                     Visibility(
                                       visible: isEditable == false,
                                       child: Column(
@@ -282,7 +276,7 @@ class _TermPageState extends State<TermPage> {
                                     Visibility(
                                         visible: isEditable,
                                         child:
-                                        BodyText(widget.data!.get('termExample'), '#999999')),
+                                        BodyText(widget.data!.get('termDescription'), '#999999')),
                                     Visibility(
                                       visible: isEditable == false,
                                       child: Column(
