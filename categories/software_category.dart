@@ -8,35 +8,9 @@ import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/main.dart';
-import 'package:lugat/pages/profile.dart';
 import 'package:lugat/pages/term.dart';
 import '../widgets/cards.dart';
-import 'package:lugat/pages/error.dart';
-import 'package:lugat/pages/homeside.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
-import 'package:sizer/sizer.dart';
-import '../repository/term_repository.dart';
-
-String termCategory = '';
-String termTitle = '';
-String termMean = '';
-String termExample = '';
-String termDescription = '';
-
-List <Term> termList = [
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-  Term(termCategory: 'Tasarım', termTitle: 'Prototip', termMean: 'İlk anlami', termExample: 'İlk örnek', termDescription: 'Ek açıklamalar', termImageUrl: 'https://www.upload.ee/image/13711150/griditem__6_.png'),
-];
 
 class Term extends StatefulWidget {
   Term({Key? key,
@@ -614,14 +588,3 @@ class LugatAppBarAddTerm extends StatelessWidget
     );
   }
 }
-
-// class Term {
-//   String termCategory;
-//   String termTitle;
-//   String termMean;
-//   String termExample;
-//   String termDescription;
-//   String termImageUrl;
-//
-//   Term(this.termCategory, this.termTitle, this.termMean, this.termExample, this.termDescription, this.termImageUrl);
-// }
