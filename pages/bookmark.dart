@@ -5,15 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/main.dart';
-import 'package:lugat/pages/profile.dart';
-import 'package:lugat/pages/term.dart';
-import '../widgets/cards.dart';
-import 'package:lugat/pages/error.dart';
-import 'package:lugat/pages/homeside.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
-import 'package:sizer/sizer.dart';
 
 class BookmarkPage extends StatefulWidget {
   const BookmarkPage({Key? key}) : super(key: key);
@@ -80,6 +72,7 @@ class LugatAppBarBookmark extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

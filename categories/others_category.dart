@@ -64,19 +64,22 @@ class _TermState extends State<Term> {
   }
 }
 
-class BackendCategory extends StatefulWidget {
-  const BackendCategory({Key? key}) : super(key: key);
+class OthersCategory extends StatefulWidget {
+  const OthersCategory({Key? key}) : super(key: key);
 
   @override
-  _BackendCategoryState createState() => _BackendCategoryState();
+  _OthersCategoryState createState() => _OthersCategoryState();
 }
 
-class _BackendCategoryState extends State<BackendCategory> {
+class _OthersCategoryState extends State<OthersCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('termCategory', isEqualTo: 'BackEnd').snapshots();
+      .collection('terms').where('termCategory', isEqualTo: 'Others').snapshots();
+  final Stream<QuerySnapshot> _termStream = FirebaseFirestore.instance
+      .collection('terms').where('termCategory', isEqualTo: 'Others').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
@@ -87,129 +90,127 @@ class _BackendCategoryState extends State<BackendCategory> {
         child: Icon(Icons.add),
       ),
       body: Material(
-        child: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              color: HexColor('#FFFFFF'),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  LugatAppBarCategory(),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        children: [
-                          CategoryCard("Back-end Developer", "1",
-                              "https://www.upload.ee/image/13785710/backendCategory.png", "nginx"),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HeadlineText('Terimler', '#000000'),
-                                PopupMenuButton<int>(
-                                  offset: Offset(-10, 36),
-                                  elevation: 0,
-                                  color: HexColor('#000000').withOpacity(0.8),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                                  ),
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem<int>(
-                                      height: 36,
-                                      value: 0,
-                                      child: Row(
-                                        children: [
-                                          Text("En popüler",
-                                              style: TextStyle(
-                                                  color: HexColor('#FFFFFF'))),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuDivider(height: 4),
-                                    PopupMenuItem<int>(
-                                        height: 36,
-                                        value: 1,
-                                        child: Text("En yeni",
-                                            style: TextStyle(
-                                                color: HexColor('#FFFFFF')))),
-                                  ],
+        child: Container(
+          decoration: BoxDecoration(
+            color: HexColor('#FFFFFF'),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                LugatAppBarCategory(),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        CategoryCard("Diğer terimler", "1",
+                            "https://www.upload.ee/image/13821620/others__2_.png", "Gülümse"),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              HeadlineText('Terimler', '#000000'),
+                              PopupMenuButton<int>(
+                                offset: Offset(-10, 36),
+                                elevation: 0,
+                                color: HexColor('#000000').withOpacity(0.8),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(6)),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              child: StreamBuilder<QuerySnapshot>(
-                                stream: _termsStream,
-                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                  if (snapshot.hasError) {
-                                    return Text('Bir şeyler ters gitmiş olmalı.');
-                                  }
-
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return Text('Şu anda içerik yükleniyor.');
-                                  }
-
-                                  return MediaQuery.removePadding(
-                                    removeTop: true,
-                                    context: context,
-                                    child: ListView(
-                                      primary: false,
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
-                                        final String termTitle = data.get('termTitle');
-                                        final String termImage = data['termImage'];
-                                        final String termMean = data['termMean'];
-                                        final String termExample = data['termExample'];
-                                        final String termDescription = data['termDescription'];
-                                        final String termAuthor = data['termAuthor'];
-                                        final String termCategory = data['termCategory'];
-                                        final bool isSaved = data['isSaved'];
-                                        final String termContributor = data['termContributor'];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(
-                                                builder: (context) => TermPage(data: data,)));
-                                          },
-                                          child: ListTile(
-                                            contentPadding:EdgeInsets.all(0),
-                                            leading: ClipOval(
-                                              child: Image.network(data['termImage'],
-                                                height: 50,
-                                                width: 50,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            title: Text(data['termTitle'],
-                                              style: TextStyle(
-                                                  fontSize: 16
-                                              ),
-                                            ),
-                                            subtitle: Text(data['termExample'],
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),),
-                                          ),
-                                        );
-                                      }).toList(),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem<int>(
+                                    height: 36,
+                                    value: 0,
+                                    child: Row(
+                                      children: [
+                                        Text("En popüler",
+                                            style: TextStyle(
+                                                color: HexColor('#FFFFFF'))),
+                                      ],
                                     ),
-                                  );
-                                },
+                                  ),
+                                  PopupMenuDivider(height: 4),
+                                  PopupMenuItem<int>(
+                                      height: 36,
+                                      value: 1,
+                                      child: Text("En yeni",
+                                          style: TextStyle(
+                                              color: HexColor('#FFFFFF')))),
+                                ],
                               ),
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: _termsStream,
+                              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                if (snapshot.hasError) {
+                                  return Text('Bir şeyler ters gitmiş olmalı.');
+                                }
+
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Text('Şu anda içerik yükleniyor.');
+                                }
+
+                                return MediaQuery.removePadding(
+                                  removeTop: true,
+                                  context: context,
+                                  child: ListView(
+                                    primary: false,
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                                      final String termTitle = data.get('termTitle');
+                                      final String termImage = data['termImage'];
+                                      final String termMean = data['termMean'];
+                                      final String termExample = data['termExample'];
+                                      final String termDescription = data['termDescription'];
+                                      final String termAuthor = data['termAuthor'];
+                                      final String termCategory = data['termCategory'];
+                                      final bool isSaved = data['isSaved'];
+                                      final String termContributor = data['termContributor'];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(
+                                              builder: (context) => TermPage(data: data,)));
+                                        },
+                                        child: ListTile(
+                                          contentPadding:EdgeInsets.all(0),
+                                          leading: ClipOval(
+                                            child: Image.network(data['termImage'],
+                                              height: 50,
+                                              width: 50,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          title: Text(data['termTitle'],
+                                            style: TextStyle(
+                                                fontSize: 16
+                                            ),
+                                          ),
+                                          subtitle: Text(data['termExample'],
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -345,7 +346,7 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termImage = value;
-                                termCategory = 'BackEnd';
+                                termCategory = 'Ai';
                                 termContributor = FirebaseAuth.instance.currentUser!.displayName!;
                               });
                             },
@@ -375,7 +376,7 @@ class _AddTermPageState extends State<AddTermPage> {
                             onChanged: (value) {
                               setState(() {
                                 termMeans = value;
-                                termCategory = 'BackEnd';
+                                termCategory = 'Others';
                               });
                             },
                             onSaved: (newValue) {
@@ -541,10 +542,10 @@ class _AddTermSuccessPageState extends State<AddTermSuccessPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const BackendCategory()),
+                                    const OthersCategory()),
                               );
                             },
-                            child: BodyText("Back-end Kategorisi", "#FFFFFF"),
+                            child: BodyText("Diğerleri Kategorisi", "#FFFFFF"),
                           ),
                         ),
                       ),
@@ -575,7 +576,7 @@ class LugatAppBarCategory extends StatelessWidget
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
         child: Text(
-          "Back-end",
+          "Diğer Terimler",
           style: TextStyle(
             color: Colors.black,
           ),

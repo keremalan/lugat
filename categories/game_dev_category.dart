@@ -158,6 +158,7 @@ class _GameDevCategoryState extends State<GameDevCategory> {
                                     removeTop: true,
                                     context: context,
                                     child: ListView(
+                                      primary: false,
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -169,6 +170,7 @@ class _GameDevCategoryState extends State<GameDevCategory> {
                                         final String termAuthor = data['termAuthor'];
                                         final String termCategory = data['termCategory'];
                                         final bool isSaved = data['isSaved'];
+                                        final String termContributor = data['termContributor'];
                                         return GestureDetector(
                                           onTap: () {
                                             Navigator.push(context, MaterialPageRoute(
@@ -237,6 +239,7 @@ class _AddTermPageState extends State<AddTermPage> {
   String _myActivityResult = '';
   String uid = '';
   String termImage = '';
+  String termContributor = '';
 
   @override
   void initState() {
@@ -343,6 +346,7 @@ class _AddTermPageState extends State<AddTermPage> {
                               setState(() {
                                 termImage = value;
                                 termCategory = 'GameDev';
+                                termContributor = FirebaseAuth.instance.currentUser!.displayName!;
                               });
                             },
                             onSaved: (newValue) {
@@ -455,7 +459,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
+                                      'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid, 'termContributor': termContributor,
                                     });
                                     Navigator.push(
                                       context,
@@ -471,6 +475,9 @@ class _AddTermPageState extends State<AddTermPage> {
                                 ),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 380,
                           ),
                         ],
                       ),
@@ -561,6 +568,7 @@ class LugatAppBarCategory extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
@@ -585,6 +593,7 @@ class LugatAppBarAddTerm extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../widgets/divider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/main.dart';
@@ -158,6 +156,7 @@ class _UiCategoryState extends State<UiCategory> {
                                     removeTop: true,
                                     context: context,
                                     child: ListView(
+                                      primary: false,
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -169,6 +168,7 @@ class _UiCategoryState extends State<UiCategory> {
                                         final String termAuthor = data['termAuthor'];
                                         final String termCategory = data['termCategory'];
                                         final bool isSaved = data['isSaved'];
+                                        final String termContributor = data['termContributor'];
                                         return GestureDetector(
                                           onTap: () {
                                             Navigator.push(context, MaterialPageRoute(
@@ -237,6 +237,7 @@ class _AddTermPageState extends State<AddTermPage> {
   String _myActivityResult = '';
   String uid = '';
   String termImage = '';
+  String termContributor = '';
 
   @override
   void initState() {
@@ -343,6 +344,7 @@ class _AddTermPageState extends State<AddTermPage> {
                               setState(() {
                                 termImage = value;
                                 termCategory = 'UI';
+                                termContributor = FirebaseAuth.instance.currentUser!.displayName!;
                               });
                             },
                             onSaved: (newValue) {
@@ -455,7 +457,7 @@ class _AddTermPageState extends State<AddTermPage> {
                                     formState.save();
                                     print(entry);
                                     FirebaseFirestore.instance.collection('terms').add({
-                                      'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid,
+                                      'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMeans, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid, 'termContributor': termContributor,
                                     });
 
 
@@ -473,6 +475,9 @@ class _AddTermPageState extends State<AddTermPage> {
                                 ),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 380,
                           ),
                         ],
                       ),
@@ -563,6 +568,7 @@ class LugatAppBarCategory extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
@@ -587,6 +593,7 @@ class LugatAppBarAddTerm extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

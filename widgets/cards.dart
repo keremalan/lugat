@@ -1,17 +1,9 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:lugat/model/term.dart';
-import 'package:lugat/pages/category.dart';
 import 'package:lugat/pages/term.dart';
 import 'texts.dart';
-import 'buttons.dart';
-import 'package:http/http.dart';
 
 Widget PopularCategoryCard(categoryImgUrl, categoryName) {
   return Padding(
@@ -269,8 +261,8 @@ Widget CategoryTermCard(termImageUrl, termName, termAuthorName) {
                 borderRadius: BorderRadius.circular(9),
                 child: Image.network(
                   "${termImageUrl}",
-                  height: 112,
-                  width: 112,
+                  height: 106,
+                  width: 106,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -294,7 +286,7 @@ Widget CategoryTermCard(termImageUrl, termName, termAuthorName) {
 
 Widget ExploreCategoryCard(categoryName, categoryImageUrl) {
   return Padding(
-    padding: const EdgeInsets.only(top: 22.0),
+    padding: const EdgeInsets.only(top: 10),
     child: Container(
       height: 144,
       width: 144,
@@ -411,8 +403,8 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                              height: 112,
-                              width: 112,
+                              height: 106,
+                              width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -441,6 +433,116 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                   padding: const EdgeInsets.only(top: 2),
                   child: GridView.builder(
                     primary: false,
+                      shrinkWrap: true,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1 / 1.4,
+                        crossAxisCount: 3,
+                      ),
+                      itemCount: items.length,
+                      padding: const EdgeInsets.only(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return items[index];
+                      }
+                  ),
+                );
+              }else{
+                return Column(
+                  children: [
+                    Text("Bir hata meydana geldi!"),
+                  ],
+                );
+              }
+            }catch(Exc){
+              print(Exc);
+              rethrow;
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class OthersCategoryOverview extends StatefulWidget {
+  OthersCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _OthersCategoryOverviewState createState() => _OthersCategoryOverviewState();
+}
+class _OthersCategoryOverviewState extends State<OthersCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where("termCategory", isEqualTo: 'Others').limit(3).snapshots();
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _termsStream,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            try{
+              if (snapshot.hasError) {
+                return const Text('Bir şeyler ters gitmiş olmalı.');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('Şu anda içerik yükleniyor.');
+              }
+
+              if(snapshot.hasData){
+                final items = snapshot.data!.docs.map(
+                        (QueryDocumentSnapshot<Object?> data) {
+                      final String termTitle = data.get('termTitle');
+                      final String termImage = data['termImage'];
+                      final String termMean = data['termMean'];
+                      final String termExample = data['termExample'];
+                      final String termDescription = data['termDescription'];
+                      final String termAuthor = data['termAuthor'];
+                      final String termCategory = data['termCategory'];
+                      final bool isSaved = data['isSaved'];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TermPage(data: data,)));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(data['termImage'],
+                                height: 106,
+                                width: 106,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            SizedBox(
+                              width: 100,
+                              child: Text(data['termTitle'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,),
+                            ),
+                            Text(data['termAuthor'],
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                ).toList();
+                return Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: GridView.builder(
+                      primary: false,
                       shrinkWrap: true,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 1 / 1.4,
@@ -521,8 +623,8 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -633,8 +735,8 @@ class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -745,8 +847,8 @@ class _CategoryOverviewState extends State<CategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -969,8 +1071,8 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -1081,8 +1183,8 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -1193,8 +1295,8 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -1305,8 +1407,8 @@ class _UICategoryOverviewState extends State<UICategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -1417,8 +1519,8 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(6),
                               child: Image.network(data['termImage'],
-                                height: 112,
-                                width: 112,
+                                height: 106,
+                                width: 106,
                                 fit: BoxFit.cover,
                               ),
                             ),

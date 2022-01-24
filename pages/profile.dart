@@ -1,21 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat/main.dart';
-import 'package:lugat/pages/category.dart';
-import 'package:lugat/pages/error.dart';
 import 'package:lugat/pages/homeside.dart';
 import 'package:lugat/pages/term.dart';
 import 'package:lugat/utilities/google_sign_in.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
 import 'package:sizer/sizer.dart';
-import '../repository/term_repository.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -51,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: ProfileHead(userName: '${FirebaseAuth.instance.currentUser!.displayName!}', userTitle: 'Arayüz Tasarımcısı', userCompany: 'Geight', userNotificationValue: '32',),
+                        child: ProfileHead(userName: '${FirebaseAuth.instance.currentUser!.displayName!}', userTitle: '', userCompany: '', userNotificationValue: '',),
                       ),
                     ],
                   ),
@@ -111,6 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     removeTop: true,
                                                     context: context,
                                                     child: ListView(
+                                                      primary: false,
                                                       scrollDirection: Axis.vertical,
                                                       shrinkWrap: true,
                                                       children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -196,6 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       removeTop: true,
                                                       context: context,
                                                       child: ListView(
+                                                        primary: false,
                                                         scrollDirection: Axis.vertical,
                                                         shrinkWrap: true,
                                                         children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -281,6 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       removeTop: true,
                                                       context: context,
                                                       child: ListView(
+                                                        primary: false,
                                                         scrollDirection: Axis.vertical,
                                                         shrinkWrap: true,
                                                         children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -356,6 +353,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   removeTop: true,
                                   context: context,
                                   child: ListView(
+                                    primary: false,
                                     scrollDirection: Axis.vertical,
                                     shrinkWrap: true,
                                     children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
@@ -389,6 +387,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           subtitle: Text(data['termExample'],
                                             style: TextStyle(
                                               fontSize: 13,
+                                              overflow: TextOverflow.ellipsis,
                                             ),),
                                         ),
                                       );
@@ -545,29 +544,29 @@ class ProfileOverviewSubText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 22),
+          padding: const EdgeInsets.only(top: 28),
           child: DescriptionText('Son katkılarım'),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 12.0),
-          child: Container(
-            height: 30,
-            width: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(
-                width: 1,
-                color: HexColor('#F2F2F2'),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network("https://www.upload.ee/thumb/13739155/threedot.png"),
-              ],
-            ),
-          ),
-        ),
+        //Padding(
+          //padding: const EdgeInsets.only(top: 12.0),
+          //child: Container(
+            //height: 30,
+            //width: 40,
+            //decoration: BoxDecoration(
+              //borderRadius: BorderRadius.circular(30),
+              //border: Border.all(
+                //width: 1,
+                //color: HexColor('#F2F2F2'),
+              //),
+            //),
+            //child: Row(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              //children: [
+               // Image.network("https://www.upload.ee/thumb/13739155/threedot.png"),
+              //],
+            //),
+          //),
+        //),
       ],
     );
   }
@@ -666,7 +665,7 @@ class ProfileHead extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 6),
-                  child: Caption2Text('-', '#A7A7A7'),
+                  child: Caption2Text('', '#A7A7A7'),
                 ),
                 Caption2Text('$userCompany', '#A7A7A7'),
               ],
@@ -683,30 +682,30 @@ class ProfileHead extends StatelessWidget {
                 width: 50,
               ),
             ),
-            Positioned(
-              child: Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.red,
-                ),
-                child: Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const NotificationPage()),
-                      );
-                    },
-                    child: Text("${userNotificationValue}",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700)),
-                  ),
-                ),
-              ),
-              top: 26,
-            ),
+            //Positioned(
+              //child: Container(
+                //height: 24,
+                //width: 24,
+                //decoration: BoxDecoration(
+                 // borderRadius: BorderRadius.circular(30),
+                  //color: Colors.red,
+                //),
+                //child: Center(
+                  //child: GestureDetector(
+                    //onTap: () {
+                      //Navigator.push(context, MaterialPageRoute(
+                        //  builder: (context) => const NotificationPage()),
+                      //);
+                    //},
+                    //child: Text("${userNotificationValue}",
+                        //style: TextStyle(
+                          //  color: Colors.white,
+                            //fontWeight: FontWeight.w700)),
+                  //),
+                //),
+             // ),
+              //top: 26,
+            //),
           ],
         ),
       ],
@@ -1202,6 +1201,7 @@ class LugatAppBarNotification extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
@@ -1239,6 +1239,7 @@ class LugatAppBarProfile extends StatelessWidget
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         elevation: 0,
         title: Text(
@@ -1277,6 +1278,7 @@ class LugatAppBarProfileSettings extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

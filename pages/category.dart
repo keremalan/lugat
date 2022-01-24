@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../widgets/divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -11,13 +10,7 @@ import 'package:lugat/main.dart';
 import 'package:lugat/pages/profile.dart';
 import 'package:lugat/pages/term.dart';
 import '../widgets/cards.dart';
-import 'package:lugat/pages/error.dart';
-import 'package:lugat/pages/homeside.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
-import 'package:sizer/sizer.dart';
-import '../repository/term_repository.dart';
 
 String termCategory = '';
 String termTitle = '';
@@ -493,6 +486,7 @@ class LugatAppBarCategory extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),
@@ -529,6 +523,7 @@ class LugatAppBarAddTerm extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

@@ -39,6 +39,7 @@ class _TermPageState extends State<TermPage> {
   String termMean = "Akla gelen ilk anlamını düzenleyin";
   String termDescription = "Ek açıklamaları düzenleyin";
   String termImage = "Görseli düzenleyin";
+  String termContributor = "";
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -51,19 +52,36 @@ class _TermPageState extends State<TermPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              LugatAppBarTerm(),
               Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Column(
                     children: [
-                      TermCard('Fotoğrafçılık', widget.data!.get('termTitle'), widget.data!.get('termAuthor'),
-                          widget.data!.get('termImage'),),
+                      AppBar(),
+                      Padding(
+                        padding: EdgeInsets.only(top: 0),
+                        child: TermCard('Fotoğrafçılık', widget.data!.get('termTitle'), widget.data!.get('termAuthor'),
+                            widget.data!.get('termImage'),),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Visibility(
+                              visible: isEditable == false,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Katkı Sağlıyorsunuz!", style: TextStyle(fontSize: 18, color: Colors.teal, fontWeight: FontWeight.w600),),
+                                    SizedBox(height: 4),
+                                    Text("Yalnızca katkı sağlamak istediğiniz alanları doldurup, geri kalan alanları boş bırakabilirsiniz."),
+                                  ],
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 22, bottom: 22),
@@ -126,13 +144,6 @@ class _TermPageState extends State<TermPage> {
                                       child: Column(
                                         children: [
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Terim adı boş bırakılamaz!';
-                                              }
-                                              return null;
-                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 termTitle = value;
@@ -162,13 +173,6 @@ class _TermPageState extends State<TermPage> {
                                       child: Column(
                                         children: [
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Terimin görseli boş bırakılamaz!';
-                                              }
-                                              return null;
-                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 termImage = value;
@@ -202,13 +206,6 @@ class _TermPageState extends State<TermPage> {
                                       child: Column(
                                         children: [
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Akla gelen ilk anlamı boş bırakılamaz!';
-                                              }
-                                              return null;
-                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 termMean = value;
@@ -242,13 +239,6 @@ class _TermPageState extends State<TermPage> {
                                       child: Column(
                                         children: [
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Örnek boş bırakılamaz!';
-                                              }
-                                              return null;
-                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 termExample = value;
@@ -282,13 +272,6 @@ class _TermPageState extends State<TermPage> {
                                       child: Column(
                                         children: [
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Ek açıklamalar boş bırakılamaz!';
-                                              }
-                                              return null;
-                                            },
                                             onChanged: (value) {
                                               setState(() {
                                                 termDescription = value;
@@ -309,50 +292,73 @@ class _TermPageState extends State<TermPage> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 22, bottom: 22),
-                                      child: Visibility(
-                                        visible: isEditable == false,
-                                        child: Center(
-                                          child: TextButton(
-                                              style: ButtonStyle(
-                                                shape: MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                    RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                )),
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        HexColor('#007AFF')),
+                                      padding: const EdgeInsets.only(bottom: 24),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 22, bottom: 0),
+                                            child: Visibility(
+                                              visible: isEditable == false,
+                                              child: Center(
+                                                child: TextButton(
+                                                    style: ButtonStyle(
+                                                      shape: MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius.circular(30),
+                                                          )),
+                                                      backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          HexColor('#007AFF')),
+                                                    ),
+                                                    onPressed: () {
+                                                      final formState = _formKey.currentState;
+                                                      if (formState == null) return;
+                                                      if (formState.validate() == true) {
+                                                        formState.save();
+                                                        FirebaseFirestore.instance.collection('contributes').add({
+                                                          'termTitle': termTitle, 'termMean': termMean, 'termExample': termExample, 'termDescription': termDescription, 'termImage': termImage, 'termAuthor': FirebaseAuth.instance.currentUser!.displayName!, 'termContributor': termContributor,
+                                                        });
+                                                      }
+                                                      setState(() {
+                                                        isEditable = !isEditable;
+                                                        termTitle = _controller.text;
+                                                      });
+                                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ContributeSuccess()));
+                                                    },
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          top: 6,
+                                                          right: 8,
+                                                          bottom: 6,
+                                                          left: 8),
+                                                      child: Text('Tamamla',
+                                                          style: TextStyle(
+                                                              color: HexColor(
+                                                                  '#FFFFFF'))),
+                                                    )),
                                               ),
-                                              onPressed: () {
-                                                final formState = _formKey.currentState;
-                                                if (formState == null) return;
-                                                if (formState.validate() == true) {
-                                                  formState.save();
-                                                  FirebaseFirestore.instance.collection('contributes').add({
-                                                    'termTitle': termTitle, 'termMean': termMean, 'termExample': termExample, 'termDescription': termDescription, 'termImage': termImage, 'termAuthor': FirebaseAuth.instance.currentUser!.displayName!,
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: isEditable == false,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 24, top: 20),
+                                              child: TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isEditable = !isEditable;
                                                   });
-                                                }
-                                                setState(() {
-                                                  isEditable = !isEditable;
-                                                  termTitle = _controller.text;
-                                                });
-                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ContributeSuccess()));
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 6,
-                                                    right: 8,
-                                                    bottom: 6,
-                                                    left: 8),
-                                                child: Text('Tamamla',
-                                                    style: TextStyle(
-                                                        color: HexColor(
-                                                            '#FFFFFF'))),
-                                              )),
-                                        ),
+                                                },
+                                                child: Text("İptal et"),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -361,7 +367,7 @@ class _TermPageState extends State<TermPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 24.0, horizontal: 0),
+                                  vertical: 0.0, horizontal: 0),
                               child: Column(
                                 children: [
                                   Row(
@@ -376,22 +382,22 @@ class _TermPageState extends State<TermPage> {
                                       children: [
                                         Padding(
                                           padding:
-                                              const EdgeInsets.only(left: 10),
+                                              const EdgeInsets.only(left: 0),
                                           child: Row(
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
-                                                child: Image.network(
-                                                    "https://www.upload.ee/image/13740474/profile.png",
-                                                    height: 20,
-                                                    width: 20),
+                                                //child: Image.network(
+                                                    //'',
+                                                    //height: 20,
+                                                    //width: 20),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 10),
+                                                    left: 0, bottom: 0),
                                                 child: Caption2Text(
-                                                    'Can Araştıranoğlu',
+                                                    '${widget.data!.get('termContributor')}',
                                                     '#BFBFBF'),
                                               ),
                                             ],
@@ -402,6 +408,10 @@ class _TermPageState extends State<TermPage> {
                                   ),
                                 ],
                               ),
+                            ),
+                            Visibility(
+                              visible: isEditable == false,
+                              child: SizedBox(height: 250),
                             ),
                           ],
                         ),
@@ -474,6 +484,7 @@ class LugatAppBarTerm extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
     );
   }

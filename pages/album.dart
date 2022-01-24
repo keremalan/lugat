@@ -77,6 +77,7 @@ class _AlbumPageState extends State<AlbumPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Albüm"),
         actions: [
           IconButton(onPressed: () {

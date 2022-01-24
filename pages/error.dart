@@ -140,6 +140,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: HexColor("#E5E5E5"),
       elevation: 0,
       centerTitle: false,

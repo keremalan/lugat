@@ -263,6 +263,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 380,
+                        ),
                       ],
                     ),
                   ),
@@ -333,7 +336,7 @@ class _FeedbackSuccessPageState extends State<FeedbackSuccessPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                            const HomePage()),
+                            const Home()),
                       );
                     },
                     child: Caption1Text("Ana sayfa", "#FFFFFF"),
@@ -642,6 +645,9 @@ class _ReportPageState extends State<ReportPage> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 280,
+                        ),
                       ],
                     ),
                   ),
@@ -906,6 +912,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: HexColor("#E5E5E5"),
       elevation: 0,
       centerTitle: false,

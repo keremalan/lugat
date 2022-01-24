@@ -4,17 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:lugat/categories/ai_category.dart';
+import 'package:lugat/categories/back_end_category.dart';
 import 'package:lugat/categories/design_category.dart';
 import 'package:lugat/categories/front_end_category.dart';
+import 'package:lugat/categories/game_dev_category.dart';
 import 'package:lugat/categories/metaverse_category.dart';
+import 'package:lugat/categories/others_category.dart';
+import 'package:lugat/categories/software_category.dart';
+import 'package:lugat/categories/ui_category.dart';
+import 'package:lugat/categories/ux_category.dart';
 import 'package:lugat/main.dart';
-import 'package:lugat/pages/profile.dart';
 import '../widgets/cards.dart';
-import 'package:lugat/pages/error.dart';
-import 'package:lugat/pages/homeside.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../widgets/buttons.dart';
-import '../widgets/texts.dart';
 import 'package:sizer/sizer.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -34,19 +35,10 @@ class _ExplorePageState extends State<ExplorePage> {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 12),
             child: Column(
               children: [
                 LugatAppBar(),
-                SearchBar('Aramak istediğiniz terimi girin'),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 32.0),
-                      child: DescriptionText('Kategoriler'),
-                    ),
-                  ],
-                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -95,18 +87,67 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   ],
                 ),
-                CategoryTitle('Back-end'),
-                BackEndCategoryOverview(),
-                CategoryTitle('UI'),
-                UICategoryOverview(),
-                CategoryTitle('UX'),
-                UXCategoryOverview(),
-                CategoryTitle('Metaverse'),
-                MetaverseCategoryOverview(),
-                CategoryTitle('Yapay Zeka'),
-                AiCategoryOverview(),
-                CategoryTitle('Front-end'),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => FrontendCategory()));
+                    },
+                    child: CategoryTitle('Front-end')),
                 FrontEndCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BackendCategory()));
+                    },
+                    child: CategoryTitle('Back-end')),
+                BackEndCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UiCategory()));
+                    },
+                    child: CategoryTitle('UI')),
+                UICategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UxCategory()));
+                    },
+                    child: CategoryTitle('UX')),
+                UXCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MetaverseCategory()));
+                    },
+                    child: CategoryTitle('Metaverse')),
+                MetaverseCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AiCategory()));
+                    },
+                    child: CategoryTitle('Yapay Zeka')),
+                AiCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => OthersCategory()));
+                    },
+                    child: CategoryTitle('Diğer Terimler')),
+                OthersCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SoftwareCategory()));
+                    },
+                    child: CategoryTitle('Yazılım')),
+                SoftwareCategoryOverview(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));
+                    },
+                    child: CategoryTitle('Tasarım')),
+                DesignCategoryOverview(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => GameDevCategory()));
+                  },
+                  child: CategoryTitle('Oyun Geliştirme'),
+                ),
+                GameDevCategoryOverview(),
               ],
             ),
           ),
@@ -126,6 +167,7 @@ class LugatAppBarExplore extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       title: const Padding(
         padding: EdgeInsets.only(left: 12),

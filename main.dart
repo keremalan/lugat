@@ -10,34 +10,22 @@ import 'package:lugat/categories/back_end_category.dart';
 import 'package:lugat/categories/design_category.dart';
 import 'package:lugat/categories/front_end_category.dart';
 import 'package:lugat/categories/metaverse_category.dart';
+import 'package:lugat/categories/others_category.dart';
 import 'package:lugat/categories/software_category.dart';
 import 'package:lugat/categories/ui_category.dart';
 import 'package:lugat/categories/ux_category.dart';
-import 'package:lugat/pages/album.dart';
 import 'package:lugat/pages/bookmark.dart';
-import 'package:lugat/pages/category.dart';
 import 'package:lugat/pages/explore.dart';
 import 'package:lugat/pages/homeside.dart';
 import 'package:lugat/pages/profile.dart';
-import 'package:lugat/pages/album.dart';
-import 'package:lugat/pages/bookmark.dart';
-import 'package:lugat/pages/category.dart';
 import 'package:lugat/pages/error.dart';
-import 'package:lugat/pages/explore.dart';
-import 'package:lugat/pages/homeside.dart';
-import 'package:lugat/pages/profile.dart';
-import 'package:lugat/pages/term.dart';
-import 'package:lugat/pages/test.dart';
 import 'package:lugat/utilities/google_sign_in.dart';
 import 'categories/game_dev_category.dart';
-import 'widgets/texts.dart';
 import 'widgets/cards.dart';
 import './pages/register.dart';
 import './pages/login.dart';
 import './pages/error.dart';
 import 'package:sizer/sizer.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -240,11 +228,6 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LugatAppBar(),
-            SearchBar('Aramak istediğiniz terimi girin'),
-            Padding(
-              padding: const EdgeInsets.only(top: 32, bottom: 2),
-              child: DescriptionText("Öne çıkan kategoriler"),
-            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -350,6 +333,13 @@ class _HomePageState extends State<HomePage> {
                 child: CategoryTitle('Oyun Geliştirme'),
             ),
             GameDevCategoryOverview(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => OthersCategory()));
+              },
+              child: CategoryTitle('Diğer Terimler'),
+            ),
+            OthersCategoryOverview(),
           ],
         ),
       ),
@@ -367,6 +357,7 @@ class LugatAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       centerTitle: false,
       leading: Padding(
@@ -402,27 +393,6 @@ Widget DescriptionText(descText) {
         height: 0.2,
         color: HexColor('#BFBFBF'),
       ),
-  );
-}
-
-Widget SearchBar(placeHold) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        width: 91.2.w,
-        height: 40,
-        child: CupertinoSearchTextField(
-          placeholder: "$placeHold",
-          onChanged: (String value) {
-            print('The text has changed to: $value');
-          },
-          onSubmitted: (String value) {
-            print('Submitted text: $value');
-          },
-        ),
-      ),
-    ],
   );
 }
 
